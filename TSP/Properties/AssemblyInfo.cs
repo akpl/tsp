@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("TSP")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Aleksander Krzeszowski")]
 [assembly: AssemblyProduct("TSP")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © Aleksander Krzeszowski 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
