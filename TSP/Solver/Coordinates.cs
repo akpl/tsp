@@ -4,8 +4,14 @@ namespace TSP.Solver
 {
     public struct Coordinates
     {
-        public double Latitude;
-        public double Longitude;
+        public Coordinates(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+
+        public readonly double Latitude;
+        public readonly double Longitude;
 
         public override string ToString()
         {
