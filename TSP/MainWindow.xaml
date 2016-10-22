@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:TSP"
         xmlns:map="clr-namespace:MapControl;assembly=MapControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="685">
+        Title="MainWindow" Height="410" Width="685">
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
-    <Grid>
+    <Window.Resources>
+        <local:StringToCoordinatesConverter x:Key="StringToCoordinatesConverter"/>
+    </Window.Resources>
+    <Grid Margin="0">
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="224" Width="255" AutoGenerateColumns="False" ItemsSource="{Binding Targets}" SelectedItem="{Binding SelectedTarget}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Adres" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Lokalizacja" Binding="{Binding Location, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Adres" Binding="{Binding Name}" Width="1*"/>
+                <DataGridTextColumn Header="Lokalizacja" Binding="{Binding Location, Converter={StaticResource StringToCoordinatesConverter}}" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="_Adres:" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top"/>
-        <Label Content="_Współrzędne:" HorizontalAlignment="Left" Margin="10,265,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="119,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding SelectedTarget.Name}" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="119,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding SelectedTarget.Location, Mode=OneWay}"/>
-        <map:Map x:Name="Map" Margin="270,0,0,0" />
-        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="164,299,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <map:Map x:Name="Map" Markers="{Binding Markers}" Margin="270,0,0,0" />
+        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="190,351,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button Content="Dodaj" HorizontalAlignment="Left" Margin="190,239,0,0" VerticalAlignment="Top" Width="75" Command="{Binding AddTargetCommand}"/>
     </Grid>
 </Window>

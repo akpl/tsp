@@ -24,7 +24,7 @@ namespace TSP.Solver
 
         public string ToDecimalDegreesString()
         {
-            return string.Format("{0}, {1}", Latitude, Longitude);
+            return $"{Latitude}, {Longitude}";
         }
     }
 }
