@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TSP.Solver
 {
+    [Serializable]
     public class Target
     {
         public string Name { get; set; }
