@@ -13,18 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TSP
+namespace MapControl
 {
-    public partial class MainWindow : Window
+    public partial class Map : UserControl
     {
-        public MainWindow()
+        public Map()
         {
             InitializeComponent();
+            var sourceStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("MapControl.MapBrowser.html");
+            MapRenderer.NavigateToStream(sourceStream);
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        public void AddMarker(double latitude, double longitude, string title)
         {
-            Map.AddMarker(50.061820, 19.936709, "Kraków");
+            MapRenderer.InvokeScript("addMarker", latitude, longitude, title);
         }
     }
 }

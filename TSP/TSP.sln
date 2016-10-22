@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP", "TSP.csproj", "{71F7D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP.Tests", "TSP.Tests\TSP.Tests.csproj", "{CCCE433A-B16E-4653-8D7A-E0835C8A9C70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapControl", "..\MapControl\MapControl.csproj", "{DA6012A0-CAE2-4F3D-8EE3-383908096E47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CCCE433A-B16E-4653-8D7A-E0835C8A9C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCCE433A-B16E-4653-8D7A-E0835C8A9C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCE433A-B16E-4653-8D7A-E0835C8A9C70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA6012A0-CAE2-4F3D-8EE3-383908096E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA6012A0-CAE2-4F3D-8EE3-383908096E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA6012A0-CAE2-4F3D-8EE3-383908096E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA6012A0-CAE2-4F3D-8EE3-383908096E47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
