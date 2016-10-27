@@ -20,7 +20,7 @@
                     <form class="form-inline" ng-submit="addTarget()">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" ng-model="location" class="form-control" placeholder="Lokalizacja">
+                                <input id="location-input" type="text" ng-model="location" class="form-control" placeholder="Lokalizacja">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Dodaj</button>
@@ -35,18 +35,9 @@
     </div>
 </div>
 
-<script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 50.061820, lng: 19.936709 },
-          zoom: 12
-        });
-      }
-</script>
-
 @section scripts {
     @Scripts.Render("~/Scripts/angular.js")
     @Scripts.Render("~/Scripts/app/targets-controller.js")
-    @Scripts.Render("https://maps.googleapis.com/maps/api/js?callback=initMap")
+    @Scripts.Render("~/Scripts/app/map.js")
+    @Scripts.Render("https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=places&key=" + System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleMapsApiKey"])
 }
