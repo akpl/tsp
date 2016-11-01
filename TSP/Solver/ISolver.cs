@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TSP.Solver
 {
-    interface ISolver
+    public interface ISolver
     {
-        IList<Target> Solve(ICollection<Target> targets);
+        Route Solve(TargetsCollection targets);
     }
 }
