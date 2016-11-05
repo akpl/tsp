@@ -23,7 +23,7 @@ namespace TSP.Solver
                 Evolve(initialPopulation);
             }
 
-            return null;
+            return initialPopulation.FindFittest();
         }
 
         private void Evolve(Population population)
@@ -33,7 +33,8 @@ namespace TSP.Solver
                 Route parent1 = SelectFittest(population);
                 Route parent2 = SelectFittest(population);
 
-                Route child = PMXCrossover(parent1, parent2);
+                Route child = OrderedCrossover(parent1, parent2);
+                population[i] = child;
             }
         }
 
@@ -53,10 +54,9 @@ namespace TSP.Solver
         }
 
         /* 
-         * Algorytm PMX - Partially Mapped Crossover
-         * Goldberg, Lingle (1985)
+         * Algorytm OX - Ordered Crossover
          */
-        public Route PMXCrossover(Route parent1, Route parent2)
+        public Route OrderedCrossover(Route parent1, Route parent2)
         {
             if (parent1.Stops < 2 || parent1.Stops != parent2.Stops)
             {
@@ -64,38 +64,32 @@ namespace TSP.Solver
             }
 
             int parentSize = parent1.Stops;
-            int firstCrossover = 2; //_random.Next(1, parentSize - 2);
-            int secondCrossover = 6; //_random.Next(1, parentSize - 2);
-            Trace.WriteLine($"PMX range: <{firstCrossover},{secondCrossover}>");
-            if (firstCrossover > secondCrossover)
+            int crossoverStart = _random.Next(0, parentSize - 1);
+            int crossoverEnd = _random.Next(0, parentSize - 1);
+            Trace.WriteLine($"Crossover range: <{crossoverStart},{crossoverEnd}>");
+            if (crossoverStart > crossoverEnd)
             {
-                Swap(ref firstCrossover, ref secondCrossover);
+                Swap(ref crossoverStart, ref crossoverEnd);
             }
 
             Target[] child = new Target[parentSize];
-            var replacements = new Dictionary<Target, Target>();
-
-            for (int point = firstCrossover; point <= secondCrossover; point++)
+            var orderedList = parent2.ToList();
+            for (int point = crossoverStart; point <= crossoverEnd; point++)
             {
-                child[point] = parent2[point];
-                replacements[parent2[point]] = parent1[point];
+                child[point] = parent1[point];
+                orderedList.Remove(child[point]);
             }
 
-            for (int point = 0; point < parentSize; point++)
+            int orderedListPoint = 0;
+            for (int childPoint = 0; childPoint < parentSize; childPoint++)
             {
-                if (point >= firstCrossover && point <= secondCrossover)
+                if (childPoint >= crossoverStart && childPoint <= crossoverEnd)
                 {
                     continue;
                 }
 
-                if (replacements.ContainsKey(parent1[point]))
-                {
-                    child[point] = replacements[parent1[point]];
-                }
-                else
-                {
-                    child[point] = parent1[point];
-                }
+                child[childPoint] = orderedList[orderedListPoint];
+                orderedListPoint++;
             }
             
             return new Route(child);

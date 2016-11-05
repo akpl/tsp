@@ -19,12 +19,12 @@ namespace TSP.Tests
         }
 
         [Test]
-        public void SimpleTest()
+        public void SimpleProblemTest()
         {
             var targets = new TargetsCollection();
-            var a = new Target { Location = new Coordinates(0, 0) };
-            var b = new Target { Location = new Coordinates(1, 1) };
-            var c = new Target { Location = new Coordinates(2, 2) };
+            var a = new Target { Name = "A", Location = new Coordinates(0, 0) };
+            var b = new Target { Name = "B", Location = new Coordinates(1, 1) };
+            var c = new Target { Name = "C", Location = new Coordinates(2, 2) };
             a.Distances = new Dictionary<Target, double>
             {
                 {b, 3},
@@ -47,59 +47,60 @@ namespace TSP.Tests
             Route shortestRoute = _solver.Solve(targets);
 
             Assert.AreEqual(3, shortestRoute.Stops);
+            Assert.AreEqual(10, shortestRoute.CalculateDistance());
         }
 
         [Test]
-        public void TspNewCrossoverTest()
+        public void RouteDistanceTest()
         {
-            GeneticSolver g = new GeneticSolver();
-            var r1 = new Route();
-            r1.Add(new Target { Name = "10", Location = new Coordinates(1, 10) });
-            r1.Add(new Target { Name = "8", Location = new Coordinates(1, 8) });
-            r1.Add(new Target { Name = "4", Location = new Coordinates(1, 4) });
-            r1.Add(new Target { Name = "5", Location = new Coordinates(1, 5) });
-            r1.Add(new Target { Name = "6", Location = new Coordinates(1, 6) });
-            r1.Add(new Target { Name = "7", Location = new Coordinates(1, 7) });
-            r1.Add(new Target { Name = "1", Location = new Coordinates(1, 1) });
-            r1.Add(new Target { Name = "3", Location = new Coordinates(1, 3) });
-            r1.Add(new Target { Name = "2", Location = new Coordinates(1, 2) });
-            r1.Add(new Target { Name = "9", Location = new Coordinates(1, 9) });
+            var targetE = new Target { Name = "E", Location = new Coordinates(5, 1) };
+            var targetD = new Target { Name = "D", Location = new Coordinates(4, 1), Distances = new Dictionary<Target, double> { { targetE, 6 }} };
+            var targetC = new Target { Name = "C", Location = new Coordinates(3, 1), Distances = new Dictionary<Target, double> { { targetD, 12 } } };
+            var targetB = new Target { Name = "B", Location = new Coordinates(2, 1), Distances = new Dictionary<Target, double> { { targetC, 4 } } };
+            var targetA = new Target { Name = "A", Location = new Coordinates(1, 1), Distances = new Dictionary<Target, double> { { targetB, 20 } } };
 
-            var r2 = new Route();
-            r2.Add(new Target { Name = "8", Location = new Coordinates(1, 8) });
-            r2.Add(new Target { Name = "7", Location = new Coordinates(1, 7) });
-            r2.Add(new Target { Name = "1", Location = new Coordinates(1, 1) });
-            r2.Add(new Target { Name = "2", Location = new Coordinates(1, 2) });
-            r2.Add(new Target { Name = "3", Location = new Coordinates(1, 3) });
-            r2.Add(new Target { Name = "10", Location = new Coordinates(1, 10) });
-            r2.Add(new Target { Name = "9", Location = new Coordinates(1, 9) });
-            r2.Add(new Target { Name = "5", Location = new Coordinates(1, 5) });
-            r2.Add(new Target { Name = "4", Location = new Coordinates(1, 4) });
-            r2.Add(new Target { Name = "6", Location = new Coordinates(1, 6) });
+            var route = new Route {targetA, targetB, targetC, targetD, targetE};
 
-            var c = g.PMXCrossover(r1, r2);
+            Assert.AreEqual(42, route.CalculateDistance());
         }
 
         [Test]
-        public void CrossoverTest()
+        public void CrossoverDoesntCreateDuplicatesTest()
         {
             GeneticSolver g = new GeneticSolver();
-            var r1 = new Route();
-            for (int i = 1; i < 10; i++)
+            var r1 = new Route
             {
-                r1.Add(new Target() { Name = i.ToString(), Location = new Coordinates(i,i)});
-            }
-            var r2 = new Route();
-            r2.Add(new Target { Name = "9", Location = new Coordinates(9,9) });
-            r2.Add(new Target { Name = "3", Location = new Coordinates(3,3) });
-            r2.Add(new Target { Name = "7", Location = new Coordinates(7,7) });
-            r2.Add(new Target { Name = "8", Location = new Coordinates(8,8) });
-            r2.Add(new Target { Name = "2", Location = new Coordinates(2,2) });
-            r2.Add(new Target { Name = "6", Location = new Coordinates(6,6) });
-            r2.Add(new Target { Name = "5", Location = new Coordinates(5,5) });
-            r2.Add(new Target { Name = "1", Location = new Coordinates(1,1) });
-            r2.Add(new Target { Name = "4", Location = new Coordinates(4,4) });
-            var c = g.PMXCrossover(r2, r1);
+                new Target {Name = "10", Location = new Coordinates(1, 10)},
+                new Target {Name = "8", Location = new Coordinates(1, 8)},
+                new Target {Name = "4", Location = new Coordinates(1, 4)},
+                new Target {Name = "5", Location = new Coordinates(1, 5)},
+                new Target {Name = "6", Location = new Coordinates(1, 6)},
+                new Target {Name = "7", Location = new Coordinates(1, 7)},
+                new Target {Name = "1", Location = new Coordinates(1, 1)},
+                new Target {Name = "3", Location = new Coordinates(1, 3)},
+                new Target {Name = "2", Location = new Coordinates(1, 2)},
+                new Target {Name = "9", Location = new Coordinates(1, 9)}
+            };
+
+            var r2 = new Route
+            {
+                new Target {Name = "8", Location = new Coordinates(1, 8)},
+                new Target {Name = "7", Location = new Coordinates(1, 7)},
+                new Target {Name = "1", Location = new Coordinates(1, 1)},
+                new Target {Name = "2", Location = new Coordinates(1, 2)},
+                new Target {Name = "3", Location = new Coordinates(1, 3)},
+                new Target {Name = "10", Location = new Coordinates(1, 10)},
+                new Target {Name = "9", Location = new Coordinates(1, 9)},
+                new Target {Name = "5", Location = new Coordinates(1, 5)},
+                new Target {Name = "4", Location = new Coordinates(1, 4)},
+                new Target {Name = "6", Location = new Coordinates(1, 6)}
+            };
+
+            var child = g.OrderedCrossover(r1, r2);
+
+            bool hasDuplicate = child.GroupBy(target => target).Count(targetsGroup => targetsGroup.Count() > 1) != 0;
+            Assert.IsFalse(hasDuplicate);
+            Assert.AreEqual(10, child.Stops);
         }
     }
 }

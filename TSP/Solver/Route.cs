@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TSP.Solver
 {
-    public class Route : IComparable<Route>
+    public class Route : IComparable<Route>, IEnumerable<Target>
     {
         private readonly IList<Target> _targets;
 
@@ -47,6 +48,16 @@ namespace TSP.Solver
         public int CompareTo(Route other)
         {
             return CalculateDistance().CompareTo(other.CalculateDistance());
+        }
+
+        public IEnumerator<Target> GetEnumerator()
+        {
+            return _targets.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)_targets).GetEnumerator();
         }
 
         public override string ToString()
