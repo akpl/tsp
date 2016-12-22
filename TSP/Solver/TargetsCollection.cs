@@ -11,6 +11,15 @@ namespace TSP.Solver
     {
         private readonly IList<Target> _targets = new List<Target>();
 
+        public TargetsCollection()
+        {
+        }
+
+        public TargetsCollection(IList<Target> targets)
+        {
+            _targets = targets;
+        }
+
         public int Count => _targets.Count;
 
         public double[,] CreateDistanceMatrix()

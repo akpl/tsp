@@ -10,7 +10,7 @@ namespace TSP.Solver
     public class GeneticSolver : ISolver
     {
         private const int PopulationSize = 50;
-        private const int GenerationsCount = 100;
+        private const int GenerationsCount = 1000;
         private const int TournamentSize = 5;
         private readonly Random _random = new Random();
         public Route Solve(TargetsCollection targets)

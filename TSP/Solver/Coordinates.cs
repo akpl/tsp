@@ -2,6 +2,7 @@
 
 namespace TSP.Solver
 {
+    [Serializable]
     public struct Coordinates
     {
         public Coordinates(double latitude, double longitude)
@@ -10,8 +11,8 @@ namespace TSP.Solver
             Longitude = longitude;
         }
 
-        public readonly double Latitude;
-        public readonly double Longitude;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public override string ToString()
         {
@@ -25,6 +26,11 @@ namespace TSP.Solver
         public string ToDecimalDegreesString()
         {
             return $"{Latitude}, {Longitude}";
+        }
+
+        public string ToOSRMString()
+        {
+            return $"{Longitude},{Latitude}";
         }
 
         #region Equality members

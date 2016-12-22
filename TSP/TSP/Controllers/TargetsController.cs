@@ -4,41 +4,42 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TSP.Services;
 using TSP.Solver;
 
 namespace TSP.Controllers
 {
     public class TargetsController : ApiController
     {
-        private static IList<Target> _targets = new List<Target> { new Target { Name = "Rynek Główny 1" } };
+        public static IList<Target> Targets = new List<Target> { new Target { Name = "Rynek Główny", Location = new Coordinates(50.061820, 19.936709) } };
         // GET: api/Targets
         public IEnumerable<Target> Get()
         {
-            return _targets;
+            return Targets;
         }
 
         // GET: api/Targets/5
         public Target Get(int id)
         {
-            return _targets[id];
+            return Targets[id];
         }
 
         // POST: api/Targets
         public void Post([FromBody]Target value)
         {
-            _targets.Add(value);
+            Targets.Add(value);
         }
 
         // PUT: api/Targets/5
         public void Put(int id, [FromBody]Target value)
         {
-            _targets[id] = value;
+            Targets[id] = value;
         }
 
         // DELETE: api/Targets/5
-        public void Delete(int id)
+        public void Delete(string id)
         {
-            _targets.RemoveAt(id);
+            Targets.Remove(Targets.Single(target => target.Location.ToString() == id));
         }
     }
 }

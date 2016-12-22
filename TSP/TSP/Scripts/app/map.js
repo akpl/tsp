@@ -3,7 +3,12 @@
         center: { lat: 50.061820, lng: 19.936709 },
         zoom: 13
     });
-
+    map.addListener('click', function (e) {
+        var marker = new google.maps.Marker({
+            position: e.latLng,
+            map: map
+        });
+    });
     var locationSearchInput = document.getElementById('location-input');
     var autocomplete = new google.maps.places.Autocomplete(locationSearchInput);
     autocomplete.bindTo('bounds', map);
