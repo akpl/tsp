@@ -1,1 +1,8 @@
-Wprowadzenie.
+W literaturze można odnaleźć liczne prace skupiające się na analizie wydajności i optymalizacji różnych algorytmów rozwiązujących problem komiwojażera. Celem poniższej pracy jest stworzenie łatwej w obsłudze aplikacji, umożliwiającej odnalezienie optymalnej trasy łączącej wprowadzone miejsca docelowe. Założenie dostępności dla zwykłego użytkownika nakłada pewne wymagania na aplikację: interfejs musi być prosty w obsłudze, a aplikacja powinna być dostępna na różnych urządzeniach (komputery, tablety, urządzenia przenośne).
+
+Wymagania te spełnia aplikacja internetowa -- dostępna przez przeglądarkę. Taki rodzaj aplikacji pozwala na realizację architektury klient-serwer. W tym modelu obliczenia są wykonywane po stronie serwera, nie obciążając klienta, który wyświetla tylko interfejs aplikacji.
+
+Kolejną konsekwencją przeznaczenia aplikacji dla zwykłych użytkowników jest konieczność zapewnienia odpowiedniej wydajności. Przetwarzanie danych powinno przebiegać w możliwie krótkim czasie, tak by użytkownik nie musiał czekać na zakończenie obliczeń. Znalezienie dokładnego rozwiązania problemu komiwojażera w czasie wielomianowym jest niemożliwe \cite{papadimitriou1977euclidean}.
+
+Poszukiwanie optymalnego rozwiązania już dla małej liczby miejsc docelowych wymagałoby znacznego czasu, nawet na wydajnym komputerze. Z tego powodu aplikacja powinna wykorzystywać algorytm sub-optymalny, który pozwala odnaleźć rozwiązanie w stosunkowo krótkim czasie, a~odnalezione trasy są wystarczająco optymalne dla praktycznych zastosowań.
+

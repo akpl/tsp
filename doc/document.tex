@@ -1,7 +1,8 @@
-\documentclass[10pt,a4paper]{report}
-
+\documentclass[12pt,a4paper]{report}
+\linespread{1.3}
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
+\usepackage[all]{xy}
 
 \begin{document}
 	\author{Aleksander Krzeszowski}
@@ -10,12 +11,34 @@
 	
 	\tableofcontents
 	
-	\chapter{Wprowadzenie}
-	\input{wprowadzenie.tex}
+	\chapter*{Wstęp}
+		\addcontentsline{toc}{chapter}{Wstęp}
+		\input{wprowadzenie.tex}
+	\chapter{Definicja i rozwiązanie problemu}
+		\section{Określenie problemu}
+			\input{definicja.tex}
+		\section{Algorytmy genetyczne}
+		\section{Selekcja}
+		\section{Krzyżowanie}
+			\input{krzyzowanie.tex}
+	\chapter{Implementacja}
+	\section{Struktura projektu}
+	(Opis najważniejszych klas, projektów w solucji)
+	\section{Integracja systemów zewnętrznych}
+		\subsection{Google Maps}
+		\subsection{OSRM: Open Source Routing Machine}
+		% When using the code in a (scientific) publication, please cite		OSRM \cite{luxen-vetter-2011}
+	\chapter{Testowanie aplikacji}
+	\section{Testy manualne}
+	(prezentacja walidacji, uruchomienie na duzych danych, innych systemach)
+	\section{Testy jednostkowe}
+	\section{Badanie wydajności}
+	(Porównanie poprawności i szybkości rozwiązania dla różnych konfiguracji Solvera)
 	
-	\chapter{Podsumowanie}
+	\chapter*{Podsumowanie}
+		\addcontentsline{toc}{chapter}{Podsumowanie}
 	
-	\begin{thebibliography}{9}
-		zawartość...
-	\end{thebibliography}
+	\bibliographystyle{plain}
+	\bibliography{bibliografia}
+	\addcontentsline{toc}{chapter}{Bibliografia}
 \end{document}
