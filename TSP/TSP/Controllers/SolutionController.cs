@@ -18,13 +18,15 @@ namespace TSP.Controllers
         }
 
         // POST: api/Solution
-        public Route Post()
+        public RoutingResult Post()
         {
-            DistanceMatrixService service = new DistanceMatrixService();
+            //IDistanceService service = new DistanceMatrixService();
+            IDistanceService service = new GoogleMapsDistanceMatrixService();
             service.FetchDistances(TargetsController.Targets);
 
             ISolver solver = new GeneticSolver();
-            return solver.Solve(new TargetsCollection(TargetsController.Targets));
+            Route bestRoute = solver.Solve(new TargetsCollection(TargetsController.Targets));
+            return new RoutingResult(bestRoute);
         }
     }
 }

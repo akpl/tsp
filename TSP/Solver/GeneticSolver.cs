@@ -10,31 +10,55 @@ namespace TSP.Solver
     public class GeneticSolver : ISolver
     {
         private const int PopulationSize = 50;
-        private const int GenerationsCount = 1000;
+        private const int GenerationsCount = 100;
         private const int TournamentSize = 5;
+        private const double MutationRate = 0.15;
+
         private readonly Random _random = new Random();
+
         public Route Solve(TargetsCollection targets)
         {
-            var initialPopulation = new Population(PopulationSize);
-            initialPopulation.InitialiseRandomRoutes(targets);
+            var population = new Population(PopulationSize);
+            population.InitialiseRandomRoutes(targets);
+            double bestRandom = population.FindFittest().CalculateDistance();
 
             for (int generation = 0; generation < GenerationsCount; generation++)
             {
-                Evolve(initialPopulation);
+                population = Evolve(population);
             }
+            double bestEvolved = population.FindFittest().CalculateDistance();
 
-            return initialPopulation.FindFittest();
+            return population.FindFittest();
         }
 
-        private void Evolve(Population population)
+        private Population Evolve(Population population)
         {
-            for (int i = 0; i < population.Size; i++)
+            var evolvedPopulation = new Population(PopulationSize);
+
+            for (int i = 0; i < evolvedPopulation.Size; i++)
             {
                 Route parent1 = SelectFittest(population);
                 Route parent2 = SelectFittest(population);
 
                 Route child = OrderedCrossover(parent1, parent2);
-                population[i] = child;
+                Mutate(child);
+                evolvedPopulation[i] = child;
+            }
+
+            return evolvedPopulation;
+        }
+
+        private void Mutate(Route route)
+        {
+            for (int firstTarget = 0; firstTarget < route.Stops; ++firstTarget)
+            {
+                if (_random.NextDouble() < MutationRate)
+                {
+                    int secondTarget = _random.Next(0, route.Stops);
+                    Target tempTarget = route[firstTarget];
+                    route[firstTarget] = route[secondTarget];
+                    route[secondTarget] = tempTarget;
+                }
             }
         }
 

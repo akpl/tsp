@@ -36,7 +36,7 @@
                     </div>
                     <button class="btn btn-primary pull-right" type="button" ng-click="findRoute()" ng-disabled="routingProgress==50">Znajdź trasę</button>
                     <ol class="list-group">
-                        <li ng-repeat="target in route" class="list-group-item">
+                        <li ng-repeat="target in route.route" class="list-group-item">
                             {{$index+1}}. <strong class="list-group-item-heading">{{target.name}}</strong>
                         </li>
                     </ol>
@@ -49,6 +49,13 @@
                         position="{{target.location.latitude}},{{target.location.longitude}}"
                         title="{{target.name}}">
                 </marker>
+                <shape name="polyline"
+                       path="{{route.path}}"
+                       geodesic="true"
+                       stroke-color="#FF0000"
+                       stroke-opacity="1.0"
+                       stroke-weight="2">
+                </shape>
             </ng-map>
         </div>
 

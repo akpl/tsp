@@ -28,6 +28,26 @@ namespace TSP.Solver
             set { _targets[key] = value; }
         }
 
+        public string ToPolylinePath()
+        {
+            StringBuilder shape = new StringBuilder();
+            shape.Append("[");
+            foreach (Target target in _targets)
+            {
+                shape.Append("[");
+                shape.Append(target.Location.ToDecimalDegreesString());
+                shape.Append("],");
+            }
+
+            if (Stops > 0)
+            {
+                shape.Remove(shape.Length - 1, 1);
+            }
+            shape.Append("]");
+
+            return shape.ToString();
+        }
+
         public double CalculateDistance()
         {
             double total = 0;

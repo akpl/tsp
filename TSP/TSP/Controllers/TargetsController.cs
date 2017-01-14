@@ -11,7 +11,8 @@ namespace TSP.Controllers
 {
     public class TargetsController : ApiController
     {
-        public static IList<Target> Targets = new List<Target> { new Target { Name = "Rynek Główny", Location = new Coordinates(50.061820, 19.936709) } };
+        public static IList<Target> Targets = Models.Targets.Read();
+
         // GET: api/Targets
         public IEnumerable<Target> Get()
         {
@@ -28,12 +29,7 @@ namespace TSP.Controllers
         public void Post([FromBody]Target value)
         {
             Targets.Add(value);
-        }
-
-        // PUT: api/Targets/5
-        public void Put(int id, [FromBody]Target value)
-        {
-            Targets[id] = value;
+            Models.Targets.Save(Targets);
         }
 
         // DELETE: api/Targets/5

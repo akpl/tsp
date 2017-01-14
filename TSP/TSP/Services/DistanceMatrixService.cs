@@ -11,7 +11,7 @@ using TSP.Solver;
 
 namespace TSP.Services
 {
-    public class DistanceMatrixService
+    public class DistanceMatrixService : IDistanceService
     {
         private readonly string _serviceUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["OSRMApiUrl"];
 
@@ -30,9 +30,6 @@ namespace TSP.Services
                     }
                 }
             });
-            var s = new Solver.GeneticSolver();
-            var r = s.Solve(new TargetsCollection(targets));
-            var dist = r.CalculateDistance();
         }
 
         private OSRMDData.Route GetRoute(Coordinates origin, Coordinates destination)
