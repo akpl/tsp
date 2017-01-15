@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using Newtonsoft.Json;
 using TSP.Solver;
 
-namespace TSP.Models
+namespace TSP.Services
 {
-    public class Targets
+    public class TargetsFileStorage : ITargetsService
     {
         private static readonly string FilePath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "tsp.json");
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "TSP", "tsp.json");
 
-        public static List<Target> Read()
+        public List<Target> Read()
         {
+            List<Target> list;
+
             try
             {
                 using (StreamReader stream = new StreamReader(FilePath))
                 {
-                    return JsonConvert.DeserializeObject<List<Target>>(stream.ReadToEnd());
+                    list = JsonConvert.DeserializeObject<List<Target>>(stream.ReadToEnd());
                 }
             }
             catch (JsonSerializationException)
@@ -30,9 +30,11 @@ namespace TSP.Models
             {
                 return new List<Target>();
             }
+
+            return list ?? new List<Target>();
         }
 
-        public static void Save(IList<Target> targets)
+        public void Save(IList<Target> targets)
         {
             JsonSerializer serializer = new JsonSerializer();
 

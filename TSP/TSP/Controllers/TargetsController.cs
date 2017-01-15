@@ -11,31 +11,46 @@ namespace TSP.Controllers
 {
     public class TargetsController : ApiController
     {
-        public static IList<Target> Targets = Models.Targets.Read();
+        private readonly ITargetsService _targetsService;
 
-        // GET: api/Targets
+        public TargetsController(ITargetsService targetsService)
+        {
+            _targetsService = targetsService;
+        }
+
+        // GET: api/TargetsService
         public IEnumerable<Target> Get()
         {
-            return Targets;
+            return _targetsService.Read();
         }
 
-        // GET: api/Targets/5
+        // GET: api/TargetsService/5
         public Target Get(int id)
         {
-            return Targets[id];
+            return _targetsService.Read()[id];
         }
 
-        // POST: api/Targets
+        // POST: api/TargetsService
         public void Post([FromBody]Target value)
         {
-            Targets.Add(value);
-            Models.Targets.Save(Targets);
+            var targets = _targetsService.Read();
+            targets.Add(value);
+            _targetsService.Save(targets);
         }
 
-        // DELETE: api/Targets/5
+        // DELETE: api/TargetsService/5
         public void Delete(string id)
         {
-            Targets.Remove(Targets.Single(target => target.Location.ToString() == id));
+            var targets = _targetsService.Read();
+            Guid idToDelete = Guid.Parse(id);
+            Target targetToDelete = targets.Single(target => target.Id == idToDelete);
+            if (targetToDelete == null)
+            {
+                return;
+            }
+
+            targets.Remove(targetToDelete);
+            _targetsService.Save(targets);
         }
     }
 }

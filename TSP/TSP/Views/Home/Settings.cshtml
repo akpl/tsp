@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Konfiguracja";
+}
+<div ng-app="TSPApp">
+    <h1 class="page-header">Konfiguracja</h1>
+    <form ng-controller="SettingsController" ng-init="load()" ng-submit="save()">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Rodzaj optymalizacji</label>
+                        <select ng-model="config.engine" class="form-control" convert-to-number>
+                            <option value="0">Odległość (Google Maps)</option>
+                            <option value="1">Czas (OpenStreetMap)</option>
+                            <option value="2">Odległość (OpenStreetMap)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Punkt startowy</label>
+                        <input type="text" value="" class="form-control" id="startPoint"/>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="config.shouldEndInStartingPoint"/> Powrót do punktu startowego
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Rozmiar populacji</label>
+                        <input type="number" ng-model="config.populationSize" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Pokolenia</label>
+                        <input type="number" ng-model="config.generationsCount" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Rozmiar turnieju</label>
+                        <input type="number" ng-model="config.tournamentSize" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Współczynnik mutacji</label>
+                        <input type="number" ng-model="config.mutationRate" class="form-control" min="0" max="1" step="0.05" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" class="btn btn-primary" value="Zapisz" />
+                <input type="button" class="btn" value="Przywróć domyślne" ng-click="reset()" />
+            </div>
+        </div>
+    </form>
+</div>
+@Scripts.Render("https://maps.googleapis.com/maps/api/js?libraries=places&key=" + System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleMapsApiKey"])
+@Scripts.Render("~/Scripts/angular.js")
+@Scripts.Render("~/Scripts/app/settings-controller.js")

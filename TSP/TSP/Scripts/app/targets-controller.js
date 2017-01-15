@@ -1,4 +1,30 @@
-﻿angular.module('TSPApp', ['ngMap'])
+﻿function findAddressComponent(address, component) {
+    var components = address.address_components;
+    for (var i = 0; i < components.length; ++i) {
+        if (components[i].types.length >= 1 && components[i].types[0] == component) {
+            return components[i].short_name;
+        }
+    }
+
+    return '';
+}
+
+function findNameForPlace(geocodeResults) {
+    if (!geocodeResults[0])
+        return 'Nieznana lokalizacja';
+
+    var address = geocodeResults[0];
+    var street = findAddressComponent(address, 'route');
+    var number = findAddressComponent(address, 'street_number');
+
+    var result = street;
+    if (number)
+        result += ' ' + number;
+
+    return result ? result : 'Nieznana lokalizacja';
+}
+
+angular.module('TSPApp', ['ngMap'])
     .controller('TargetsController', function ($scope, $http, NgMap) {
         $scope.targets = [];
         $scope.routingProgress = 0;
@@ -19,7 +45,7 @@
             self.geocoder.geocode({ 'location': e.latLng },
                 function(results, status) {
                     if (status === 'OK') {
-                        var geocodedName = results[0] ? results[0].formatted_address : 'Nieznana lokalizacja';
+                        var geocodedName = findNameForPlace(results);
                         var newTarget = {
                             name: geocodedName,
                             location: { 'latitude': e.latLng.lat(), 'longitude': e.latLng.lng() }
@@ -35,7 +61,7 @@
             
         };
         $scope.deleteTarget = function (target) {
-            var locationString = target.location.latitude + ', ' + target.location.longitude;
+            var locationString = target.id;
             $http.delete('/api/Targets/' + locationString).success(function () {
                 $scope.getTargets();
             });

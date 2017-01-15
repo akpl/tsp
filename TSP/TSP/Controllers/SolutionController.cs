@@ -11,6 +11,15 @@ namespace TSP.Controllers
 {
     public class SolutionController : ApiController
     {
+        private readonly ITargetsService _targetsService;
+        private readonly IDistanceService _distanceService;
+
+        public SolutionController(ITargetsService targetsService, IDistanceServiceFactory distanceServiceFactory)
+        {
+            _targetsService = targetsService;
+            _distanceService = distanceServiceFactory.Build();
+        }
+
         // GET: api/Solution
         public string Get()
         {
@@ -20,12 +29,13 @@ namespace TSP.Controllers
         // POST: api/Solution
         public RoutingResult Post()
         {
-            //IDistanceService service = new DistanceMatrixService();
-            IDistanceService service = new GoogleMapsDistanceMatrixService();
-            service.FetchDistances(TargetsController.Targets);
+            var targets = _targetsService.Read();
+            
+            _distanceService.FetchDistances(targets);
 
             ISolver solver = new GeneticSolver();
-            Route bestRoute = solver.Solve(new TargetsCollection(TargetsController.Targets));
+            Route bestRoute = solver.Solve(new TargetsCollection(targets));
+
             return new RoutingResult(bestRoute);
         }
     }

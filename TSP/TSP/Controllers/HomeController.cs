@@ -12,5 +12,10 @@ namespace TSP.Controllers
         {
             return View();
         }
+
+        public ActionResult Settings()
+        {
+            return View();
+        }
     }
 }

@@ -6,9 +6,17 @@ namespace TSP.Solver
     [Serializable]
     public class Target
     {
+        [NonSerialized]
+        private IDictionary<Target, double> _distances;
+
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
         public Coordinates Location { get; set; }
-        public IDictionary<Target,double> Distances { get; set; }
+        public IDictionary<Target, double> Distances
+        {
+            get { return _distances; }
+            set { _distances = value; }
+        }
 
         protected bool Equals(Target other)
         {
