@@ -67,9 +67,7 @@ namespace TSP.Services
 
         private Uri CreateRequestUri(Coordinates origin, Coordinates destination)
         {
-            const string routeService = "route/v1/driving";
-            string request = $"{_serviceUrl}/{routeService}/{origin.ToOSRMString()};{destination.ToOSRMString()}?overview=false";
-
+            string request = $"{_serviceUrl}/route/v1/driving/{origin.ToOSRMString()};{destination.ToOSRMString()}?overview=false";
             return new Uri(request);
         }
     }

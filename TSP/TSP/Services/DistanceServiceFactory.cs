@@ -22,6 +22,8 @@ namespace TSP.Services
                     return new GoogleMapsDistanceMatrixService();
                 case DistanceResolverType.OSRMDistance:
                     return new DistanceMatrixService();
+                    case DistanceResolverType.OSRMTime:
+                    return new OSRMTableService();
                 default:
                     return null;
             }

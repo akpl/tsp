@@ -168,6 +168,8 @@
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\IDistanceServiceFactory.cs" />
     <Compile Include="Services\ITargetsService.cs" />
+    <Compile Include="Services\OSRMDData\TableResponse.cs" />
+    <Compile Include="Services\OSRMTableService.cs" />
     <Compile Include="Services\TargetsFileStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingResult.cs" />
