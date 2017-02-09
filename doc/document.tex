@@ -2,13 +2,21 @@
 \linespread{1.3}
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
+\usepackage{graphics}
+\usepackage{changepage}
+\usepackage{caption}
+\usepackage{url}
 \usepackage[all]{xy}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
+
+\newcommand{\source}[1]{\caption*{\textbf{Źródło}: {#1}} }		
+
 \begin{document}
 	\author{Aleksander Krzeszowski}
 	\title{Aplikacja usprawniająca pracę kuriera -- problem komiwojażera w praktyce}
-	\maketitle
+	
+	\input{tytul.tex}
 	
 	\tableofcontents
 	
@@ -16,6 +24,7 @@
 		\addcontentsline{toc}{chapter}{Wstęp}
 		\input{wprowadzenie.tex}
 	\chapter{Definicja i rozwiązanie problemu}
+		\label{ch:definicja_i_rozwiazanie}
 		\section{Określenie problemu}
 			\input{definicja.tex}
 		\section{Algorytmy genetyczne}
@@ -23,22 +32,26 @@
 		\section{Krzyżowanie}
 			\input{krzyzowanie.tex}
 	\chapter{Implementacja}
-	\section{Struktura projektu}
-	(Opis najważniejszych klas, projektów w solucji)
-	\section{Integracja systemów zewnętrznych}
-		\subsection{Google Maps}
-		\subsection{OSRM: Open Source Routing Machine}
-		% When using the code in a (scientific) publication, please cite		OSRM \cite{luxen-vetter-2011}
+		\section{Struktura projektu}
+			(Opis najważniejszych projektów i klas, architektura aplikacji, schematy)
+			\input{struktura.tex}
+		\section{Integracja systemów zewnętrznych}
+			(Opis API, sposobu integracji i napotkanych problemów)
+			\subsection{Google Maps}
+			\subsection{OSRM: Open Source Routing Machine}
+			% When using the code in a (scientific) publication, please cite		OSRM \cite{luxen-vetter-2011}
 	\chapter{Testowanie aplikacji}
 	\section{Testy manualne}
-	(prezentacja walidacji, uruchomienie na duzych danych, innych systemach)
+	(Prezentacja działania aplikacji (screenshoty), uruchomienie dla dużej liczby punktów, przy różnej konfiguracji)
 	\section{Testy jednostkowe}
+	\label{sec:testy_jednostkowe}
+	(Opis testów jednostkowych sprawdzających poprawność komponentów)
 	\section{Badanie wydajności}
-	(Porównanie poprawności i szybkości rozwiązania dla różnych konfiguracji Solvera)
+	(Porównanie poprawności i szybkości rozwiązania dla różnych konfiguracji algorytmu)
 	
 	\chapter*{Podsumowanie}
 		\addcontentsline{toc}{chapter}{Podsumowanie}
-	
+		(Podsumowanie pracy, potencjalne możliwości rozwoju aplikacji.)
 	\bibliographystyle{plain}
 	\bibliography{bibliografia}
 	\addcontentsline{toc}{chapter}{Bibliografia}

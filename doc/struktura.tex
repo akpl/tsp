@@ -1,0 +1,54 @@
+Aplikacja została zrealizowana w języku C\#. Jest to zorientowany obiektowo język korzystający z .NET Framework \cite{csharp}. Do tworzenia aplikacji w tej technologii można skorzystać z darmowego środowiska Visual Studio. Język ten został wybrany głównie ze względu na możliwość stworzenia w nim aplikacji internetowej w technologii ASP.NET oraz dobrą wydajność pozwalającą na szybkie dokonanie obliczeń. 
+
+C\# jest kompilowany do kodu pośredniego (CIL), przez co jego szybkość jest nieco niższa od języków kompilowanych do języka maszynowego, jak np. C, C++. Jednak skompilowany kod pośredni jest mocno zoptymalizowany, co pozwala na użycie go także w czasochłonnych obliczeniach, a niższa wydajność względem kodu natywnego jest praktycznie niezauważalna.
+
+Praca w Visual Studio polega na stworzeniu \textit{solucji}, czyli zbioru powiązanych projektów tworzących po skompilowaniu gotową aplikację. Podział na projekty umożliwia skorzystanie z różnych języków i kompilatorów w jednej solucji, a także logiczny podział komponentów. Powiązania między projektami są określane przez \textit{referencje}. Po określeniu które projekty są zależne od innych, kompilator potrafi automatycznie ustalić kolejność ich budowania.
+
+\noindent Solucja opisywanej aplikacji składa się z trzech projektów:
+
+\medskip
+
+\noindent \textbf{TSP} 
+
+\begin{figure}
+	\centering
+	\def\svgwidth{\columnwidth}
+	\input{rest.pdf_tex}
+	\caption{Schemat komunikacji między serwerem aplikacji oraz potencjalnymi klientami usługi sieciowej}
+	\source{Opracowanie własne}
+	\label{fig:rest_api}
+\end{figure}
+
+Przeglądarkowy interfejs użytkownika, napisany w AngularJS, który korzysta z API\footnote{Application Programming Interface} stworzonego w ASP.NET. API zostało zrealizowane jako \textit{webservice} w konwencji REST\footnote{Representional State Transfer}: udostępnia wszystkie funkcjonalności przy użyciu standardowych metod HTTP, co pozwala łatwo napisać alternatywny interfejs, na przykład w formie aplikacji mobilnej. Klient może pobrać listę punktów pośrednich na mapie, wysyłając żądanie typu \texttt{GET}, lub podając identyfikator punktu wybrać pojedynczy punkt. Zarówno odpowiedzi serwisu jak i~żądania klienta składają się z obiektów zserializowanych do tekstowego formatu JSON\footnote{JavaScript Object Notation}, który stanowi alternatywę dla XML. Pobierając wybrany punkt z serwisu, odpowiedź zostanie zwrócona w poniższym formacie:
+
+\begin{verbatim}
+{  
+    "Id":"fff9a6bc-d36e-4c30-a49b-aa7022bfa352",
+    "Name":"Basztowa 1, 33-332 Kraków, Polska",
+    "Location": 
+    {  
+        "Latitude":50.066285384750863,
+        "Longitude":19.935379028320312
+    }
+}
+\end{verbatim}
+
+Dodawanie punktów jest realizowane przez żądanie \texttt{POST}, a usuwanie przez \texttt{DELETE}. Próba pobranie lub usunięcia nieistniejącego punktu spowoduje zwrócenie standardowego błędu HTTP 404. 
+
+Aby umożliwić jednoznaczną identyfikację punktów, każdy punkt przy dodawaniu otrzymuje indywidualny, losowy identyfikator GUID\footnote{Globally Unique Identifier}, który wygląda następująco: \texttt{5B7665CB-0B67-4D14-85F6-CDE6C5ACA7C8}. Składa się on z 32 znaków heksadecymalnych, przez co prawdopodobieństwo wylosowania identycznego identyfikatora jest znikome. Schemat komunikacji z API został przedstawiony na rysunku \ref{fig:rest_api}.
+
+W zrealizowanej aplikacji z API serwisu korzysta strona napisana w HTML oraz JavaScript z biblioteką AngularJS. Dzięki skorzystaniu z możliwości JavaScript, strona nie musi być przeładowywana przy wykonywaniu żądania, przez co przypomina natywną aplikację okienkową pod względem wygody i~szybkości obsługi.
+
+\medskip
+
+\noindent \textbf{Solver}
+
+Silnik odnajdujący optymalne trasy na podstawie zbioru punktów. Utworzenie silnika w osobnym projekcie sprawia że jest kompilowany do osobnego pliku DLL. Jest on zupełnie niezależny od interfejsu użytkownika (nie posiada referencji do projektu TSP). Umożliwia to skorzystanie z jego możliwości w innych aplikacjach, oraz implementację alternatywnych interfejsów, np.~w~formie zwykłej aplikacji okienkowej na system Windows.
+
+Opis wykorzystanych algorytmów znajduje się w rozdziale \ref{ch:definicja_i_rozwiazanie}.
+
+\medskip
+
+\noindent \textbf{Solver.Tests}
+
+Testy jednostkowe, sprawdzające poprawność działania silnika. Zostały napisane z pomocą otwartoźródłowej biblioteki NUnit, umożliwiającej tworzenie testów jednostkowych w .NET Framework. Najważniejsze testy zostaną opisane w rozdziale \ref{sec:testy_jednostkowe}.

@@ -1,5 +1,5 @@
-Problem komiwojażera polega na wyznaczeniu trasy łączącej wybrane punkty\footnote{Pierwotnie problem dotyczył tras między miastami, przez co w opracowaniach lub algorytmach punkty pośrednie często nazywa się miastami}, przy dodatkowych warunkach: każdy punkt może zostać odwiedzony wyłącznie raz, poza wybranym punktem będącym początkiem i końcem trasy. Można więc powiedzieć, że rozwiązanie stanowi permutacja $n$ punktów, a optymalnym rozwiązaniem jest permutacja o minimalnej sumie odległości między punktami\cite{genetyczne}.
-		
+Problem komiwojażera polega na wyznaczeniu trasy łączącej wybrane punkty\footnote{Pierwotnie problem dotyczył tras między miastami, przez co w opracowaniach lub algorytmach punkty pośrednie często nazywa się miastami}, przy dodatkowych warunkach: każdy punkt może zostać odwiedzony wyłącznie raz, poza wybranym punktem będącym początkiem i końcem trasy. Można więc powiedzieć, że rozwiązanie stanowi permutacja $n$ punktów, a~optymalnym rozwiązaniem jest permutacja o minimalnej sumie odległości między punktami\cite{genetyczne}.
+
 \begin{figure}[h!]
 	\begin{displaymath}
 	\xygraph{
@@ -36,23 +36,34 @@ Punkty pośrednie stanowią wierzchołki grafu, a trasy je łączące to krawęd
 		\end{tabular}
 	\end{center}
 	\caption{Przykład symetryczny: Macierz sąsiedztwa}
+	\source{Opracowanie własne}
 \end{table}
 
 Jednak w rzeczywistym zastosowaniu (a także w zrealizowanej aplikacji) mamy do czynienia z asymetryczną wersją problemu, a więc ze skierowanym grafem. Jest to spowodowane tym, że co prawda z dowolnego punktu możemy dotrzeć do innego, jednak trasy między dwoma punktami mogą być inne (na przykład ulice jednokierunkowe). W rezultacie konieczne jest odnalezienie $n^2-n$ odległości między punktami.
+\begin{figure}
+	\centering
+	\def\svgwidth{\columnwidth}
+	\input{asymetryczny.pdf_tex}
+	\caption{Przykład asymetryczny: Reprezentacja grafowa}
+	\label{fig:przyklad2_komiwojazer_graf}
+\end{figure}
 
-\begin{xy}
-	(0,40)*+{A}="a"; (40,40)*+{B}="b";%
-	(0,0)*+{C}="c";  (40,0)*+{D}="d";%
-	{\ar@/^0.5pc/ "a";"b"}?*!/_3mm/{13};
-	{\ar@/^0.5pc/ "b";"a"}?*!/_3mm/{2};
-	{\ar@/^0.5pc/ "a";"c"}?*!/_3mm/{13};
-	{\ar@/^0.5pc/ "c";"a"}?*!/_3mm/{9};
-	{\ar@/^0.5pc/ "c";"d"}?*!/_3mm/{3};
-	{\ar@/^0.5pc/ "d";"c"}?*!/_3mm/{24};
-	{\ar@/^0.5pc/ "b";"d"}?*!/_3mm/{8};
-	{\ar@/^0.5pc/ "d";"b"}?*!/_3mm/{2};
-	{\ar@/^0.75pc/ "a";"d"}?*!/_3mm/{7};
-	{\ar@/^0.75pc/ "d";"a"}?*!/_3mm/{12};
-\end{xy}
+\begin{table}
+	\begin{center}
+		\begin{tabular}
+			{  c | c c c c }
+			& A & B & C & D \\
+			\hline
+			A & 0  & 13 & 9  &  7 \\
+			B & 2  & 0  & 8  &  8 \\
+			C & 13 & 14 & 0  &  3 \\
+			D & 12 & 2  & 24 &  0 \\
+		\end{tabular}
+	\end{center}
+	\caption{Przykład symetryczny: Macierz sąsiedztwa}
+	\source{Opracowanie własne}
+\end{table}
+
+Przykład problemu asymetrycznego znajduje się na grafie \ref{fig:przyklad2_komiwojazer_graf}. Najkrótszą trasą rozpoczynającą się w punkcie $C$ jest $C \to D \to B \to A \to C$ o~długości~16.
 
 Warto zauważyć że dla algorytmów nie ma znaczenia w jakiej jednostce jest wyrażona waga -- można więc tym samym algorytmem optymalizować zarówno odległość, jak i czas przejazdu.
