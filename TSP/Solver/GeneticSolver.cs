@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TSP.Solver
 {
     public class GeneticSolver : ISolver
     {
-        private const int PopulationSize = 50;
-        private const int GenerationsCount = 100;
-        private const int TournamentSize = 5;
-        private const double MutationRate = 0.15;
+        public int PopulationSize = 50;
+        public int GenerationsCount = 100;
+        public int TournamentSize = 5;
+        public double MutationRate = 0.15;
 
         private readonly Random _random = new Random();
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace TSP.Services
+﻿namespace TSP.Services
 {
     public class DistanceServiceFactory : IDistanceServiceFactory
     {
@@ -22,7 +17,7 @@ namespace TSP.Services
                     return new GoogleMapsDistanceMatrixService();
                 case DistanceResolverType.OSRMDistance:
                     return new DistanceMatrixService();
-                    case DistanceResolverType.OSRMTime:
+                case DistanceResolverType.OSRMTime:
                     return new OSRMTableService();
                 default:
                     return null;

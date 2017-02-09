@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using TSP.Solver;
 
@@ -48,6 +45,50 @@ namespace TSP.Tests
 
             Assert.AreEqual(3, shortestRoute.Stops);
             Assert.AreEqual(10, shortestRoute.CalculateDistance());
+        }
+
+        [Test]
+        public void ComplexProblemTest()
+        {
+            var targets = new TargetsCollection();
+            var a = new Target { Name = "A", Location = new Coordinates(0, 0) };
+            var b = new Target { Name = "B", Location = new Coordinates(10, 0) };
+            var c = new Target { Name = "C", Location = new Coordinates(0, 10) };
+            var d = new Target { Name = "D", Location = new Coordinates(10, 10) };
+            a.Distances = new Dictionary<Target, double>
+            {
+                {b, 13},
+                {c, 13},
+                {d, 7}
+            };
+            b.Distances = new Dictionary<Target, double>
+            {
+                {a, 2},
+                {c, 14},
+                {d, 8}
+            };
+            c.Distances = new Dictionary<Target, double>
+            {
+                {a, 9},
+                {b, 8},
+                {d, 3}
+            };
+            d.Distances = new Dictionary<Target, double>
+            {
+                {a, 12},
+                {b, 8},
+                {c, 24}
+            };
+            targets.Add(a);
+            targets.Add(b);
+            targets.Add(c);
+            targets.Add(d);
+
+            Route shortestRoute = _solver.Solve(targets);
+
+            Assert.AreEqual(4, shortestRoute.Stops);
+            Assert.AreEqual(13, shortestRoute.CalculateDistance());
+            Assert.AreEqual("C->D->B->A", shortestRoute.ToString());
         }
 
         [Test]
