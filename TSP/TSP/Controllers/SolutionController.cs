@@ -25,15 +25,27 @@ namespace TSP.Controllers
         public RoutingResult Post()
         {
             List<Target> targets = _targetsService.Read();
-            
+            Target startingPoint = _configuration.StartingPoint;
+            if (startingPoint != null)
+            {
+                targets.Add(startingPoint);
+            }
+
             _distanceService.FetchDistances(targets);
+
+            if (startingPoint != null)
+            {
+                targets.Remove(startingPoint);
+            }
 
             ISolver solver = new GeneticSolver
             {
                 GenerationsCount = _configuration.GenerationsCount,
                 MutationRate = _configuration.MutationRate,
                 PopulationSize = _configuration.PopulationSize,
-                TournamentSize = _configuration.TournamentSize
+                TournamentSize = _configuration.TournamentSize,
+                Origin = startingPoint,
+                End = _configuration.ShouldEndInStartingPoint ? startingPoint : null
             };
 
             Route bestRoute = solver.Solve(new TargetsCollection(targets));

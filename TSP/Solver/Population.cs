@@ -12,14 +12,14 @@ namespace TSP.Solver
             _routes = new Route[populationSize];
         }
 
-        public void InitialiseRandomRoutes(IEnumerable<Target> targets)
+        public void InitialiseRandomRoutes(IEnumerable<Target> targets, Target first, Target last)
         {
             var targetList = targets.ToList();
 
             for (int routeIndex = 0; routeIndex < Size; routeIndex++)
             {
                 targetList.Shuffle();
-                var randomRoute = new Route(targetList);
+                var randomRoute = new Route(targetList, first, last);
                 _routes[routeIndex] = randomRoute;
             }
         }

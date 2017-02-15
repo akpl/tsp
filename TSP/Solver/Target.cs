@@ -18,6 +18,11 @@ namespace TSP.Solver
             set { _distances = value; }
         }
 
+        public double FindDistanceTo(Target target)
+        {
+            return Distances[target];
+        }
+
         protected bool Equals(Target other)
         {
             return Location.Equals(other.Location);

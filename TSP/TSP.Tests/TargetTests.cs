@@ -17,7 +17,7 @@ namespace TSP.Tests
             var coords = new Coordinates(14.123, 13.345);
 
             Assert.AreEqual("14.123°N 13.345°E", coords.ToString());
-            Assert.AreEqual("14.123, 13.345", coords.ToDecimalDegreesString());
+            Assert.AreEqual("14.123,13.345", coords.ToDecimalDegreesString());
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace TSP.Tests
             var coords = new Coordinates(-33.987, -25.543);
 
             Assert.AreEqual("33.987°S 25.543°W", coords.ToString());
-            Assert.AreEqual("-33.987, -25.543", coords.ToDecimalDegreesString());
+            Assert.AreEqual("-33.987,-25.543", coords.ToDecimalDegreesString());
         }
     }
 }

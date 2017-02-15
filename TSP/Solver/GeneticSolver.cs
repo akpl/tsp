@@ -10,13 +10,15 @@ namespace TSP.Solver
         public int GenerationsCount = 100;
         public int TournamentSize = 5;
         public double MutationRate = 0.15;
+        public Target Origin;
+        public Target End;
 
         private readonly Random _random = new Random();
 
         public Route Solve(TargetsCollection targets)
         {
             var population = new Population(PopulationSize);
-            population.InitialiseRandomRoutes(targets);
+            population.InitialiseRandomRoutes(targets, Origin, End);
             double bestRandom = population.FindFittest().CalculateDistance();
 
             for (int generation = 0; generation < GenerationsCount; generation++)
@@ -113,7 +115,7 @@ namespace TSP.Solver
                 orderedListPoint++;
             }
             
-            return new Route(child);
+            return new Route(child, Origin, End);
         }
 
         private static void Swap(ref int first, ref int second)

@@ -10,14 +10,19 @@ namespace TSP.Solver
     public class Route : IComparable<Route>, IEnumerable<Target>
     {
         private readonly IList<Target> _targets;
+        private readonly Target _origin;
+        private readonly Target _end;
 
         public Route()
         {
             _targets = new List<Target>();
         }
-        public Route(IEnumerable<Target> collection)
+
+        public Route(IEnumerable<Target> collection, Target origin = null, Target end = null)
         {
             _targets = new List<Target>(collection);
+            _origin = origin;
+            _end = end;
         }
 
         public int Stops => _targets.Count;
@@ -32,7 +37,19 @@ namespace TSP.Solver
         {
             StringBuilder shape = new StringBuilder();
             shape.Append("[");
-            foreach (Target target in _targets)
+            var fullPath = _targets.ToList();
+
+            if (_origin != null)
+            {
+                fullPath.Insert(0, _origin);
+            }
+
+            if (_end != null)
+            {
+                fullPath.Add(_end);
+            }
+
+            foreach (Target target in fullPath)
             {
                 shape.Append("[");
                 shape.Append(target.Location.ToDecimalDegreesString());
@@ -60,6 +77,11 @@ namespace TSP.Solver
             for (int targetIndex = 0; targetIndex < legs; targetIndex++)
             {
                 total += _targets[targetIndex].Distances[_targets[targetIndex+1]];
+            }
+
+            if (_origin != null)
+            {
+                total += _origin.FindDistanceTo(_targets[0]);
             }
 
             return total;

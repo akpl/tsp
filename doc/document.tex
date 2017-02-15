@@ -8,8 +8,13 @@
 \usepackage{url}
 \usepackage[all]{xy}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usetikzlibrary{arrows}
 
+\makeatletter
+\renewcommand{\ALG@name}{Algorytm}
+\makeatother
 \newcommand{\source}[1]{\caption*{\textbf{Źródło}: {#1}} }		
 
 \begin{document}
@@ -28,9 +33,16 @@
 		\section{Określenie problemu}
 			\input{definicja.tex}
 		\section{Algorytmy genetyczne}
-		\section{Selekcja}
-		\section{Krzyżowanie}
+			\input{genetyczne.tex}
+		\subsection{Inicjalizacja}
+			\input{inicjalizacja.tex}
+		\subsection{Funkcja oceny}
+			\input{ocena.tex}
+		\subsection{Selekcja}
+			\input{selekcja.tex}
+		\subsection{Krzyżowanie}
 			\input{krzyzowanie.tex}
+		\subsection{Mutacja}
 	\chapter{Implementacja}
 		\section{Struktura projektu}
 			(Opis najważniejszych projektów i klas, architektura aplikacji, schematy. Wzorce projektowe w osobnym podrozdziale? MVVM, Factory, IoC, )

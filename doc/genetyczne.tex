@@ -1,0 +1,19 @@
+Ogólny przebieg algorytmu ewolucyjnego wygląda następująco:
+
+\begin{algorithm}
+	\caption{Program ewolucyjny\hfill\textbf{Źródło}: \cite{genetyczne} }\label{ewolucyjny}
+	\begin{algorithmic}[1]
+		\Procedure{Program Ewolucyjny}{}
+		\State $t\gets 0$
+		\State ustal początkowe $P(t)$ 	\Comment Inicjalizacja
+		\While{\textbf{not} warunek zakończenia}
+			\State $t\gets t + 1$
+			\State wybierz $P(t)$ z $P(t - 1)$ \Comment Selekcja
+			\State zmień $P(t)$ \Comment Krzyżowanie i mutacja
+			\State oceń $P(t)$ \Comment Funkcja oceny
+		\EndWhile
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+W kolejnych podrozdziałach zostaną omówione poszczególne etapy programu.
