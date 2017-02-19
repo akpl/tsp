@@ -1,1 +1,58 @@
-% Krzyżowanie OX, zaproponowany w 1985 przez L. Davisa \cite{davis1985applying}
+Krzyżowanie to proces łączenia cech dwóch chromosomów, prowadzący do stworzenia potomka przez wymianę odcinków chromosomów rodziców\cite{genetyczne}.
+
+Klasyczne metody krzyżowania używane dla innych problemów, w przypadku problemu komiwojażera okazują się niewydajne. Przy prostym krzyżowaniu (np. dwupunktowym) uzyskany osobnik mógłby zawierać duplikaty, które sprawiają że rozwiązanie jest błędne. Można zlikwidować nieprawidłowe elementy przez dodatkowe ,,naprawianie'', jednak lepszą metodą jest użycie algorytmu wyspecjalizowanego do danego problemu.
+
+Jako metodę krzyżowania w aplikacji został wybrany algorytm OX\footnote{Ordered Crossover} autorstwa L. Davisa\cite{davis1985applying}.
+
+\noindent\textbf{Przykład:}
+Dla rodziców $P_{1}$ i $P_{2}$ wybrano dwa losowe punkty: o indeksach 2 i 4 (licząc od zera). Należy przepisać elementy między wybranymi punktami krzyżowania z pierwszego rodzica do potomka, równocześnie usuwając je z~drugiego chromosomu.
+\bigskip
+
+\begin{minipage}[t]{0.5\textwidth}
+	 \begin{tabular}{r|c|c|c|c|c|c|c|c|}
+	 	\hhline{~*{8}{-}}
+	 	$P_{1}$: & 1 & 2 & \cellcolor{blue!25}3 & \cellcolor{blue!25}4 & \cellcolor{blue!25}5 & 6 & 7 & 8 \\
+	 	
+	 	\hhline{~*{8}{=}}
+	 	
+	 	$P_{2}$: & 3 & 7 & \cellcolor{blue!25}2 & \cellcolor{blue!25}1 & \cellcolor{blue!25}8 & 6 & 4 & 5 \\
+	 	\hhline{~*{8}{-}}
+	 \end{tabular} 
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+	 \begin{tabular}{r|c|c|c|c|c|c|c|c|}
+	 	\hhline{~*{8}{-}}
+	 	$O$: & \hphantom{5} & \hphantom{5} & 3 & 4 & 5 & \hphantom{5} & \hphantom{5} & \hphantom{5} \\
+	 	\hhline{~*{8}{-}}
+	 \end{tabular} 
+\end{minipage}
+
+%\vspace{1cm}
+\bigskip
+Następnie trzeba wypełnić brakujące indeksy potomka pozostałymi elementami drugiego rodzica zachowując kolejność.
+\bigskip
+
+\begin{minipage}[t]{0.5\textwidth}
+	\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+		\hhline{~*{8}{-}}
+		$P_{1}$: & 1 & 2 & \cellcolor{blue!25}3 & \cellcolor{blue!25}4 & \cellcolor{blue!25}5 & 6 & 7 & 8 \\
+		
+		\hhline{~*{8}{=}}
+		
+		$P_{2}$: & \st{3} & 7 & \cellcolor{blue!25}2 & \cellcolor{blue!25}1 & \cellcolor{blue!25}8 & 6 & \st{4} & \st{5} \\
+		\hhline{~*{8}{-}}
+	\end{tabular} 
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+	\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+		\hhline{~*{8}{-}}
+		$O$: & 7 & 2 & 3 & 4 & 5 & 1 & 8 & 6 \\
+		\hhline{~*{8}{-}}
+	\end{tabular} 
+\end{minipage}
+
+\begin{center}
+	\textbf{Źródło:} Opracowanie własne na podstawie \cite{davis1985applying}
+\end{center}
+
+Krzyżowanie zostało zakończone -- potomek $O$ zawiera cechy chromosomów obu rodziców.

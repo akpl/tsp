@@ -5,11 +5,18 @@
 \usepackage{graphics}
 \usepackage{changepage}
 \usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
 \usepackage{url}
 \usepackage[all]{xy}
 \usepackage{tikz}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{bchart}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{soul}
+\usepackage[perpage]{footmisc}
 \usetikzlibrary{arrows}
 
 \makeatletter
@@ -48,9 +55,11 @@
 			(Opis najważniejszych projektów i klas, architektura aplikacji, schematy. Wzorce projektowe w osobnym podrozdziale? MVVM, Factory, IoC, )
 			\input{struktura.tex}
 		\section{Integracja systemów zewnętrznych}
-			(Opis API, sposobu integracji i napotkanych problemów)
+			\input{zewnetrzne.tex}
 			\subsection{Google Maps}
+			\input{gmaps.tex}
 			\subsection{OSRM: Open Source Routing Machine}
+			\input{osrm.tex}
 			% When using the code in a (scientific) publication, please cite		OSRM \cite{luxen-vetter-2011}
 	\chapter{Testowanie aplikacji}
 	\section{Testy manualne}
@@ -58,9 +67,8 @@
 	\section{Testy jednostkowe}
 	\label{sec:testy_jednostkowe}
 	(Opis testów jednostkowych sprawdzających poprawność komponentów)
-	\section{Badanie wydajności}
-	(Porównanie poprawności i szybkości rozwiązania dla różnych konfiguracji algorytmu)
-	
+	\section{Badanie wydajności}\label{sec:wydajnosc}
+	\input{wydajnosc.tex}
 	\chapter*{Podsumowanie}
 		\addcontentsline{toc}{chapter}{Podsumowanie}
 		(Podsumowanie pracy, potencjalne możliwości rozwoju aplikacji.)

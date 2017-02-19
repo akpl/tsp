@@ -40,15 +40,15 @@ Punkty pośrednie stanowią wierzchołki grafu, a trasy je łączące to krawęd
 \end{table}
 
 Jednak w rzeczywistym zastosowaniu (a także w zrealizowanej aplikacji) mamy do czynienia z asymetryczną wersją problemu, a więc ze skierowanym grafem. Jest to spowodowane tym, że co prawda z dowolnego punktu możemy dotrzeć do innego, jednak trasy między dwoma punktami mogą być inne (na przykład ulice jednokierunkowe). W rezultacie konieczne jest odnalezienie $n^2-n$ odległości między punktami.
-\begin{figure}
+\begin{figure}[t!]
 	\centering
-	\def\svgwidth{\columnwidth}
+	\def\svgwidth{0.6\columnwidth}
 	\input{asymetryczny.pdf_tex}
 	\caption{Przykład asymetryczny: Reprezentacja grafowa}
 	\label{fig:przyklad2_komiwojazer_graf}
 \end{figure}
 
-\begin{table}
+\begin{table}[H]
 	\begin{center}
 		\begin{tabular}
 			{  c | c c c c }
@@ -67,3 +67,5 @@ Jednak w rzeczywistym zastosowaniu (a także w zrealizowanej aplikacji) mamy do 
 Przykład problemu asymetrycznego znajduje się na grafie \ref{fig:przyklad2_komiwojazer_graf}. Najkrótszą trasą rozpoczynającą się w punkcie $C$ jest $C \to D \to B \to A \to C$ o~długości~16.
 
 Warto zauważyć że dla algorytmów nie ma znaczenia w jakiej jednostce jest wyrażona waga -- można więc tym samym algorytmem optymalizować zarówno odległość, jak i czas przejazdu.
+
+\clearpage

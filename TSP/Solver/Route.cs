@@ -37,19 +37,8 @@ namespace TSP.Solver
         {
             StringBuilder shape = new StringBuilder();
             shape.Append("[");
-            var fullPath = _targets.ToList();
-
-            if (_origin != null)
-            {
-                fullPath.Insert(0, _origin);
-            }
-
-            if (_end != null)
-            {
-                fullPath.Add(_end);
-            }
-
-            foreach (Target target in fullPath)
+            
+            foreach (Target target in GetFullPath())
             {
                 shape.Append("[");
                 shape.Append(target.Location.ToDecimalDegreesString());
@@ -87,6 +76,24 @@ namespace TSP.Solver
             return total;
         }
 
+        private IEnumerable<Target> GetFullPath()
+        {
+            if (_origin != null)
+            {
+                yield return _origin;
+            }
+
+            foreach (Target target in _targets)
+            {
+                yield return target;
+            }
+
+            if (_end != null)
+            {
+                yield return _end;
+            }
+        }
+
         public int CompareTo(Route other)
         {
             return CalculateDistance().CompareTo(other.CalculateDistance());
@@ -109,7 +116,7 @@ namespace TSP.Solver
                 return string.Empty;
             }
             var route = new StringBuilder();
-            foreach (Target target in _targets)
+            foreach (Target target in GetFullPath())
             {
                 route.Append(target.Name ?? String.Empty);
                 route.Append("->");

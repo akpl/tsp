@@ -1,0 +1,9 @@
+Usługa Google Maps udostępnia poprzez API różne usługi za darmo. Konieczna jest rejestracja na stronie firmy Google, gdzie możliwe jest utworzenie klucza identyfikującego aplikację na serwerze. Wygenerowany klucz musi być przesyłany z każdym żądaniem do serwera, w przeciwnym wypadku zostanie odesłana odpowiedź o braku dostępu.
+
+Interfejs Google jest dostępny dla wielu języków i technologii. Program korzysta z dwóch: \textbf{Maps JavaScript API}, działającego po stronie przeglądarki, oraz \textbf{Web Services API}, używanego przez napisany w C\# serwer.
+
+Widoczna na interfejsie użytkownika interaktywna mapa jest utworzona przy pomocy API JavaScript. Umożliwia ono dodanie do strony HTML odpowiedniego widoku graficznego, oraz wykonywanie na nim różnych akcji z poziomu kodu JavaScript, np. zaznaczenia punktów i narysowania odcinków pomiędzy nimi. Możliwa jest także obsługa zdarzeń pochodzących z mapy, np. kliknięcia lub zmiany powiększenia. Tę obsługę realizuje się poprzez tzw. \textit{callbacki}, czyli własne funkcje obsługujące zdarzenie, napisane w JavaScript i~przekazane do obiektów API.
+
+Pozostałe dane są pobierane przez serwer z Web Services API. Jest to przede wszystkim macierz odległości między punktami. \textbf{Google Maps Distance Matrix API} umożliwia wysłanie listy współrzędnych w pojedynczym zapytaniu i otrzymanie odpowiedzi w formacie JSON, zawierającej wszystkie odległości i czasy.
+
+Poważnym ograniczeniem tego API jest wymiar macierzy odległości. Jest to tylko 25 punktów na zapytanie. Ponadto istnieją ograniczenia na dobową i sekundową liczbę zapytań.

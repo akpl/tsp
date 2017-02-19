@@ -1,0 +1,47 @@
+Pierwszym etapem poszukiwania rozwiązania jest pobranie danych z serwisu. Aplikacja obsługuje trzy źródła: 
+\begin{itemize}
+	\item odległości z Google Maps (serwis internetowy, pojedyncze zapytanie),
+	\item odległości z OpenStreetMap (serwis lokalny, wiele zapytań równoległych)
+	\item czas przejazdu z OpenStreetMap (serwis lokalny, pojedyncze zapytanie) 
+\end{itemize}
+
+Wyniki pomiarów wydajności dla 10 punktów zostały przedstawione w tabeli \ref{tab:pobieranie} oraz na wykresie \ref{chart:pobieranie}.
+
+\begin{table}[t!]
+	\centering
+	\caption{Czas pobierania danych dla różnych metod [ms]}
+	\label{tab:pobieranie}
+	\begin{tabular}{r|ccc}
+& \textbf{Google Maps} & \textbf{\begin{tabular}[c]{@{}c@{}}OSRM \\ (dystans)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}OSRM \\ (czas)\end{tabular}} \\ \hline
+& 601                  & 7797                                                               & 62                                                                 \\
+& 447                  & 1074                                                               & 31                                                                 \\
+& 446                  & 6747                                                               & 26                                                                 \\
+& 454                  & 1046                                                               & 45                                                                 \\
+& 423                  & 1228                                                               & 34                                                                 \\
+& 437                  & 7176                                                               & 29                                                                 \\
+& 492                  & 960                                                                & 21                                                                 \\
+& 948                  & 1073                                                               & 40                                                                 \\
+& 472                  & 6859                                                               & 19                                                                 \\
+& 415                  & 7379                                                               & 30                                                                 \\ \hline
+\textbf{Średnia} & \textbf{513.5}       & \textbf{4133.9}                                                    & \textbf{33.7}                                                      \\ \hline
+Maksimum         & 948                  & 7797                                                               & 62                                                                 \\ \hline
+Minimum          & 415                  & 960                                                                & 19                                                                
+
+	\end{tabular}
+	\source{Opracowanie własne}
+\end{table}
+\begin{figure}[b!]
+	\caption{Czas pobierania danych dla różnych metod: wykres}
+	\begin{bchart}[max=5000, step=1000, unit=ms]
+		\label{chart:pobieranie}
+		\bcbar[label=Google Maps]{513.5}
+		\smallskip
+		\bcbar[label=OSRM (dystans)]{4133.9}
+		\smallskip
+		\bcbar[label=OSRM (czas)]{33.7}
+	\end{bchart}
+	\source{Opracowanie własne}
+\end{figure}
+
+\clearpage
+Po wykonaniu powyższych pomiarów okazało się że najszybszą metodą jest pobieranie macierzy czasów przejazdów z lokalnego serwisu OSRM. Jest to zgodne z przewidywaniami, gdyż cała macierz jest pobierana w jednym zapytaniu HTTP oraz nie występują opóźnienia spowodowane transmisją sieciową.

@@ -1,0 +1,11 @@
+Aby móc rozwiązać problem dla większej niż 25 liczby punktów, należy w ustawieniach aplikacji wybrać silnik \textbf{OpenStreetMap}. OpenStreetMap to otwartoźródłowy projekt, mający na celu dostarczyć darmową alternatywę dla map komercyjnych.
+
+Na bazie OpenStreetMap powstał projekt \textbf{OSRM}\footnote{Open Source Routing Machine}. Jest to konsolowy program, możliwy do uruchomienia na własnym komputerze bez dostępu do internetu. Przez udostępnione API HTTP umożliwia m.in. odnajdowanie tras między podanymi współrzędnymi.
+
+Podobnie jak z Google Maps możliwe jest pobranie macierzy w jednym zapytaniu. Zaletą OSRM jest brak ograniczenia liczby punktów (w praktyce ograniczeniem są możliwości komputera na którym uruchomiono program). Niestety zwracana z API macierz zawiera wyłącznie informacje o szacowanych czasach, a nie dystansach. W czasie pisania poniższej pracy nie została ukończona wersja OSRM zwracająca dystanse w macierzy.
+
+W celu skorzystania z OSRM do optymalizacji odległości, aplikacja wysyła wielokrotne zapytania do API - wymaga to wysłania jednego żądania HTTP na jedną odległość. Ponieważ złożoność tego rodzaju pobierania danych to $O(n^{2})$, to jego prędkość jest bardzo wolna. Aby nieco przyspieszyć działanie, aplikacja wysyła zapytania równolegle, z wielu wątków. Jednak ta metoda wciąż pozostaje najwolniejsza - porównanie jej szybkości z innymi znajduje się w rozdziale \ref{sec:wydajnosc}.
+
+Aby uruchomić OSRM lokalnie, można skorzystać z Dockera. Skompilowany projekt jest dostarczony w postaci kontenera, który należy wcześniej skonfigurować. W tym celu trzeba pobrać plik map ze strony OpenStreetMap, następnie udostępnić go Dockerowi i wewnątrz kontenera skompilować go do użycia przez OSRM.
+
+Ponieważ OSRM nie ma potrzeby komunikacji z żadnym zewnętrznym serwisem przez internet, nie ma ograniczeń na liczbę zapytań.
