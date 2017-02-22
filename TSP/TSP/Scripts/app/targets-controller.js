@@ -29,6 +29,8 @@ angular.module('TSPApp', ['ngMap'])
         $scope.targets = [];
         $scope.routingProgress = 0;
         $scope.route = [];
+        $scope.wayPoints = [];
+
         var self = this;
         self.geocoder = new google.maps.Geocoder;
         NgMap.getMap().then(function (map) {
@@ -74,8 +76,28 @@ angular.module('TSPApp', ['ngMap'])
         $scope.findRoute = function () {
             $scope.routingProgress = 50;
             $http.post('/api/Solution').success(function (data, status, headers, config) {
-                $scope.routingProgress = 100;
+                $scope.routingProgress = 75;
+
+                var firstElement = data.route.length > 0 ? data.route[0] : null;
+                data.start = firstElement.location.latitude + ',' + firstElement.location.longitude;
+                var lastElement = data.route.length > 1 ? data.route[data.route.length - 1] : firstElement;
+                data.end = lastElement.location.latitude + ',' + lastElement.location.longitude;
+                
+                var wayPointsCount = data.route.length - 1;
+                var wayPoints = [];
+                for (var point = 1; point < wayPointsCount; ++point) {
+                    wayPoints.push({
+                        location: {
+                            lat: data.route[point].location.latitude,
+                            lng: data.route[point].location.longitude
+                        },
+                        stopover: true
+                    });
+                }
+
+                data.wayPoints = wayPoints;
                 $scope.route = data;
+                $scope.routingProgress = 100;
             });
         };
     });

@@ -13,6 +13,8 @@ namespace TSP.Services
     {
         private readonly string _serviceUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["OSRMApiUrl"];
 
+        public string Unit => "s";
+
         public void FetchDistances(IList<Target> targets)
         {
             Uri requestUri = CreateRequestUri(targets);

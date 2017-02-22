@@ -12,5 +12,6 @@ namespace TSP
 
         public Route Route { get; set; }
         public string Path { get; set; }
+        public string Length { get; set; }
     }
 }

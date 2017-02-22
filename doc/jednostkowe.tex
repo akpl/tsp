@@ -1,0 +1,53 @@
+Projekt zawiera kilka testów jednostkowych, które sprawdzają poprawność poszczególnych komponentów programu. Testy jednostkowe są wykonywane automatycznie, przez co po modyfikacji kodu programu można łatwo upewnić się, czy wprowadzone zmiany są zgodne z testami.
+
+\begin{center}
+\begin{forest}
+  for tree={
+    font=\ttfamily,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[TSP.Tests
+  [SolverTests
+	[SimpleProblemTest]
+    [ComplexProblemTest]
+    [CrossoverDoesntCreateDuplicatesTest]
+    [RouteDistanceTest]
+  ]
+  [TargetTests
+    [NorthEastCoordinatesToStringTest]
+    [SouthWestCoordinatesToStringTest]
+  ]
+]
+\end{forest}
+\end{center}
+
+Dwa testy (\texttt{SimpleProblemTest} i \texttt{ComplexProblemTest}) sprawdzają działanie całego silnika, przy domyślnych ustawieniach. Drugi z testów dostarcza na wejście przykładowy problem przedstawiony we wprowadzeniu.
+
+Test \texttt{CrossoverDoesntCreateDuplicatesTest} gwarantuje że wynik krzyżowania jest poprawny: nie zawiera duplikatów i składa się z tej samej liczby punktów co źródłowe trasy.
+
+\texttt{RouteDistanceTest} zapewnia poprawność obliczania całkowitej długości trasy.
+
+Testy zawarte w klasie \texttt{TargetTests} testują zamianę przykładowych współrzędnych geograficznych na tekst. Jest to istotne, ponieważ w aplikacji występują trzy sposoby zapisu współrzędnych. Ze względu na wykorzystanie dwóch systemów zewnętrznych wymagających różnych formatów, oraz wyświetlanie współrzędnych użytkownikowi, potrzebne są wszystkie trzy:
+
+\begin{itemize}
+	\item "$14.123^{\circ}$N $13.345^{\circ}$E" - format przeznaczony do wyświetlania,
+	\item "14.123,13.345" - format Google Maps,
+	\item "13.345,14.123" - format OSRM.
+\end{itemize}
+
+

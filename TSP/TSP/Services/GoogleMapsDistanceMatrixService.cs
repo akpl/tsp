@@ -14,6 +14,8 @@ namespace TSP.Services
     {
         private readonly string _apiKey = WebConfigurationManager.AppSettings["GoogleMapsApiKey"];
 
+        public string Unit => "m";
+
         public void FetchDistances(IList<Target> targets)
         {
             Uri requestUri = CreateRequestUri(targets);

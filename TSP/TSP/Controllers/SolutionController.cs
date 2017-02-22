@@ -50,7 +50,10 @@ namespace TSP.Controllers
 
             Route bestRoute = solver.Solve(new TargetsCollection(targets));
 
-            return new RoutingResult(bestRoute);
+            return new RoutingResult(bestRoute)
+            {
+                Length = bestRoute.CalculateDistance() + " " + _distanceService.Unit
+            };
         }
     }
 }

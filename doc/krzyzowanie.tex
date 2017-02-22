@@ -2,7 +2,7 @@ Krzyżowanie to proces łączenia cech dwóch chromosomów, prowadzący do stwor
 
 Klasyczne metody krzyżowania używane dla innych problemów, w przypadku problemu komiwojażera okazują się niewydajne. Przy prostym krzyżowaniu (np. dwupunktowym) uzyskany osobnik mógłby zawierać duplikaty, które sprawiają że rozwiązanie jest błędne. Można zlikwidować nieprawidłowe elementy przez dodatkowe ,,naprawianie'', jednak lepszą metodą jest użycie algorytmu wyspecjalizowanego do danego problemu.
 
-Jako metodę krzyżowania w aplikacji został wybrany algorytm OX\footnote{Ordered Crossover} autorstwa L. Davisa\cite{davis1985applying}.
+Jako metodę krzyżowania w aplikacji został wybrany algorytm OX\footnote{Ordered Crossover} autorstwa L. Davisa\cite{davis1985applying}. Wynikiem krzyżowania tym algorytmem jest poprawna trasa (metoda gwarantuje brak duplikatów), dlatego jest dobrym wyborem do rozwiązywania problemu komiwojażera.
 
 \noindent\textbf{Przykład:}
 Dla rodziców $P_{1}$ i $P_{2}$ wybrano dwa losowe punkty: o indeksach 2 i 4 (licząc od zera). Należy przepisać elementy między wybranymi punktami krzyżowania z pierwszego rodzica do potomka, równocześnie usuwając je z~drugiego chromosomu.

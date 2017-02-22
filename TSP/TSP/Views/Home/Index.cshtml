@@ -36,6 +36,7 @@
                     </div>
                     <button class="btn btn-primary" type="button" ng-click="findRoute()">Znajdź trasę</button>
                     <div>
+                        Znaleziona długość: {{route.length}}
                         <ol class="list-group">
                             <li ng-repeat="target in route.route" class="list-group-item">
                                 {{$index+1}}. <strong class="list-group-item-heading">{{target.name}}</strong>
@@ -47,6 +48,9 @@
         </div>
         <div class="col-md-8 fill">
             <ng-map center="[50.061820, 19.936709]" class="fill" on-click="addTargetOnMap()">
+                <marker position="@ViewBag.StartingPoint.Location.ToDecimalDegreesString()"
+                        title="@ViewBag.StartingPoint.Name" icon="~/Content/start.png">
+                </marker>
                 <marker ng-repeat="target in targets"
                         position="{{target.location.latitude}},{{target.location.longitude}}"
                         title="{{target.name}}">
@@ -58,6 +62,12 @@
                        stroke-opacity="1.0"
                        stroke-weight="2">
                 </shape>
+                @*<directions draggable="true"
+                            travel-mode="DRIVING"
+                            waypoints="{{route.wayPoints}}"
+                            origin="{{route.start}}"
+                            destination="{{route.end}}">
+                </directions>*@
             </ng-map>
         </div>
 

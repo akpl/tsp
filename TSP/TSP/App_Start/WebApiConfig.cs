@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json.Serialization;
 using TSP.Services;
@@ -33,7 +31,9 @@ namespace TSP
             container.RegisterInstance<IDistanceServiceFactory>(new DistanceServiceFactory(configurationService), 
                 new ContainerControlledLifetimeManager());
 
-            config.DependencyResolver = new UnityResolver(container);
+            DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
+
+            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
         }
     }
 }

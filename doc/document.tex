@@ -16,6 +16,7 @@
 \usepackage{colortbl}
 \usepackage{hhline}
 \usepackage{soul}
+\usepackage{forest}
 \usepackage[perpage]{footmisc}
 \usetikzlibrary{arrows}
 
@@ -50,6 +51,7 @@
 		\subsection{Krzyżowanie}
 			\input{krzyzowanie.tex}
 		\subsection{Mutacja}
+			\input{mutacja.tex}
 	\chapter{Implementacja}
 		\section{Struktura projektu}
 			(Opis najważniejszych projektów i klas, architektura aplikacji, schematy. Wzorce projektowe w osobnym podrozdziale? MVVM, Factory, IoC, )
@@ -57,16 +59,15 @@
 		\section{Integracja systemów zewnętrznych}
 			\input{zewnetrzne.tex}
 			\subsection{Google Maps}
-			\input{gmaps.tex}
+				\input{gmaps.tex}
 			\subsection{OSRM: Open Source Routing Machine}
-			\input{osrm.tex}
-			% When using the code in a (scientific) publication, please cite		OSRM \cite{luxen-vetter-2011}
+				\input{osrm.tex}
 	\chapter{Testowanie aplikacji}
 	\section{Testy manualne}
 	(Prezentacja działania aplikacji (screenshoty), uruchomienie dla dużej liczby punktów, przy różnej konfiguracji)
 	\section{Testy jednostkowe}
-	\label{sec:testy_jednostkowe}
-	(Opis testów jednostkowych sprawdzających poprawność komponentów)
+		\label{sec:testy_jednostkowe}
+		\input{jednostkowe.tex}
 	\section{Badanie wydajności}\label{sec:wydajnosc}
 	\input{wydajnosc.tex}
 	\chapter*{Podsumowanie}
