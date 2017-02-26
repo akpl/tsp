@@ -13,8 +13,6 @@
         };
     })
     .controller('SettingsController', function ($scope, $http) {
-        var self = this;
-        //self.geocoder = new google.maps.Geocoder;
         $scope.config = {};
         $scope.startPointCoords = "";
 
@@ -28,7 +26,7 @@
             var autocomplete = new google.maps.places.Autocomplete(locationSearchInput);
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
-                var name = place.name; //place.address_components[0];
+                var name = place.name;
                 var location = place.geometry.location;
                 var newTarget = {
                     name: name,

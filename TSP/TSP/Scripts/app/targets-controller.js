@@ -75,29 +75,37 @@ angular.module('TSPApp', ['ngMap'])
         };
         $scope.findRoute = function () {
             $scope.routingProgress = 50;
-            $http.post('/api/Solution').success(function (data, status, headers, config) {
-                $scope.routingProgress = 75;
+            $http.post('/api/Solution')
+                .success(function (data) {
+                    $scope.routingProgress = 75;
 
-                var firstElement = data.route.length > 0 ? data.route[0] : null;
-                data.start = firstElement.location.latitude + ',' + firstElement.location.longitude;
-                var lastElement = data.route.length > 1 ? data.route[data.route.length - 1] : firstElement;
-                data.end = lastElement.location.latitude + ',' + lastElement.location.longitude;
+                    var firstElement = data.route.length > 0 ? data.route[0] : null;
+                    data.start = firstElement.location.latitude + ',' + firstElement.location.longitude;
+                    var lastElement = data.route.length > 1 ? data.route[data.route.length - 1] : firstElement;
+                    data.end = lastElement.location.latitude + ',' + lastElement.location.longitude;
                 
-                var wayPointsCount = data.route.length - 1;
-                var wayPoints = [];
-                for (var point = 1; point < wayPointsCount; ++point) {
-                    wayPoints.push({
-                        location: {
-                            lat: data.route[point].location.latitude,
-                            lng: data.route[point].location.longitude
-                        },
-                        stopover: true
-                    });
-                }
+                    var wayPointsCount = data.route.length - 1;
+                    var wayPoints = [];
+                    for (var point = 1; point < wayPointsCount; ++point) {
+                        wayPoints.push({
+                            location: {
+                                lat: data.route[point].location.latitude,
+                                lng: data.route[point].location.longitude
+                            },
+                            stopover: true
+                        });
+                    }
 
-                data.wayPoints = wayPoints;
-                $scope.route = data;
-                $scope.routingProgress = 100;
-            });
+                    data.wayPoints = wayPoints;
+                    $scope.route = data;
+                    $scope.routingProgress = 100;
+                })
+                .error(function (data) {
+                    $scope.routingProgress = 100;
+                    var error = ('exceptionMessage' in data)
+                        ? data.exceptionMessage
+                        : 'Nieznany błąd serwera.';
+                    window.alert("Serwer aplikacji zwrócił błąd:\n\n" + error);
+                });
         };
     });

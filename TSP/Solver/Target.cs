@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace TSP.Solver
 {
@@ -12,6 +13,7 @@ namespace TSP.Solver
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
         public Coordinates Location { get; set; }
+        [JsonIgnore]
         public IDictionary<Target, double> Distances
         {
             get { return _distances; }

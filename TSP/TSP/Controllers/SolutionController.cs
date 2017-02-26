@@ -44,6 +44,7 @@ namespace TSP.Controllers
                 MutationRate = _configuration.MutationRate,
                 PopulationSize = _configuration.PopulationSize,
                 TournamentSize = _configuration.TournamentSize,
+                IsElitismEnabled = _configuration.IsElitismEnabled,
                 Origin = startingPoint,
                 End = _configuration.ShouldEndInStartingPoint ? startingPoint : null
             };

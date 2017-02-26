@@ -18,6 +18,7 @@ namespace TSP
         public int PopulationSize { get; set; } = 50;
         public int GenerationsCount { get; set; } = 100;
         public int TournamentSize { get; set; } = 5;
-        public double MutationRate { get; set; } = 0.15;
+        public double MutationRate { get; set; } = 0.1;
+        public bool IsElitismEnabled { get; set; } = true;
     }
 }

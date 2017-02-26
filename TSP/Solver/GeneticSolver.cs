@@ -10,6 +10,7 @@ namespace TSP.Solver
         public int GenerationsCount = 100;
         public int TournamentSize = 5;
         public double MutationRate = 0.15;
+        public bool IsElitismEnabled = true;
         public Target Origin;
         public Target End;
 
@@ -30,18 +31,25 @@ namespace TSP.Solver
             return population.FindFittest();
         }
 
-        private Population Evolve(Population population)
+        private Population Evolve(Population originalPopulation)
         {
             var evolvedPopulation = new Population(PopulationSize);
+            int evolvedIndex = 0;
 
-            for (int i = 0; i < evolvedPopulation.Size; i++)
+            if (IsElitismEnabled)
             {
-                Route parent1 = SelectFittest(population);
-                Route parent2 = SelectFittest(population);
+                evolvedPopulation[0] = originalPopulation.FindFittest();
+                ++evolvedIndex;
+            }
+
+            for (; evolvedIndex < evolvedPopulation.Size; ++evolvedIndex)
+            {
+                Route parent1 = SelectFittest(originalPopulation);
+                Route parent2 = SelectFittest(originalPopulation);
 
                 Route child = OrderedCrossover(parent1, parent2);
                 Mutate(child);
-                evolvedPopulation[i] = child;
+                evolvedPopulation[evolvedIndex] = child;
             }
 
             return evolvedPopulation;
@@ -62,7 +70,7 @@ namespace TSP.Solver
         }
 
         /**
-         * Tournament selection
+         * Selekcja turniejowa
          */
         private Route SelectFittest(Population population)
         {
@@ -89,7 +97,6 @@ namespace TSP.Solver
             int parentSize = parent1.Stops;
             int crossoverStart = _random.Next(0, parentSize - 1);
             int crossoverEnd = _random.Next(0, parentSize - 1);
-            Trace.WriteLine($"Crossover range: <{crossoverStart},{crossoverEnd}>");
             if (crossoverStart > crossoverEnd)
             {
                 Swap(ref crossoverStart, ref crossoverEnd);

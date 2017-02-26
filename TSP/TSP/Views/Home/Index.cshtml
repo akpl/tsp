@@ -5,15 +5,20 @@
 <div ng-app="TSPApp" class="fill">
     <div class="row fill" ng-controller="TargetsController">
         <div class="col-md-4">
-            <div class="panel panel-default" ng-init="getTargets()">
-                <div class="panel-heading">Przesyłki</div>
-                <div class="panel-body">
-                    <ul class="list-group">
+            <div style="margin-top: 10px; margin-bottom: 3px;">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a data-toggle="tab" href="#targets">Przesyłki</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#route">Trasa</a></li>
+                </ul>
+            </div>
+            <div class="tab-content" style="min-height: 400px;">
+                <div class="tab-pane active" id="targets" ng-init="getTargets()">
+                    <ul class="list-group pre-scrollable">
                         <li ng-repeat="target in targets" class="list-group-item">
                             <strong class="list-group-item-heading">{{target.name}}</strong>
-                            <a href="#" class="pull-right" ng-click="deleteTarget(target)"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a href="" class="pull-right" ng-click="deleteTarget(target)"><i class="glyphicon glyphicon-remove"></i></a>
                             <p class="list-group-item-text">
-                                <small>{{target.location.latitude}}, {{target.location.longitude}}</small>
+                                <small>{{target.location.asString}}</small>
                             </p>
                         </li>
                     </ul>
@@ -23,27 +28,30 @@
                                 <input id="location-input" type="text" ng-model="location" class="form-control" placeholder="Lokalizacja">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                        <button type="submit" class="btn btn-default">Dodaj</button>
                     </form>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Trasa</div>
-                <div class="panel-body">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" ng-style="{width : ( routingProgress + '%' ) }" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" type="button" ng-click="findRoute()">Znajdź trasę</button>
+                <div class="tab-pane" id="route">
                     <div>
-                        Znaleziona długość: {{route.length}}
-                        <ol class="list-group">
+                        <ol class="list-group pre-scrollable">
                             <li ng-repeat="target in route.route" class="list-group-item">
                                 {{$index+1}}. <strong class="list-group-item-heading">{{target.name}}</strong>
                             </li>
                         </ol>
                     </div>
                 </div>
+            </div>
+            <div class="well">
+                <div class="progress progress-striped" ng-class="{'active': routingProgress < 100}">
+                    <div class="progress-bar" role="progressbar"
+                         ng-style="{width : ( routingProgress + '%' ) }"
+                         ng-class="{'progress-bar-success': routingProgress==100}"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="button" ng-click="findRoute()">Znajdź trasę</button>
+                <p></p>
+                <p ng-show="routingProgress == 100"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Znaleziona trasa: {{route.length}}</p>
             </div>
         </div>
         <div class="col-md-8 fill">
@@ -63,11 +71,11 @@
                        stroke-weight="2">
                 </shape>
                 @*<directions draggable="true"
-                            travel-mode="DRIVING"
-                            waypoints="{{route.wayPoints}}"
-                            origin="{{route.start}}"
-                            destination="{{route.end}}">
-                </directions>*@
+                                travel-mode="DRIVING"
+                                waypoints="{{route.wayPoints}}"
+                                origin="{{route.start}}"
+                                destination="{{route.end}}">
+                    </directions>*@
             </ng-map>
         </div>
 
