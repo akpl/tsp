@@ -4,11 +4,9 @@ C\# jest kompilowany do kodu pośredniego (CIL), przez co jego szybkość jest n
 
 Praca w Visual Studio polega na stworzeniu \textit{solucji}, czyli zbioru powiązanych projektów tworzących po skompilowaniu gotową aplikację. Podział na projekty umożliwia skorzystanie z różnych języków i kompilatorów w jednej solucji, a także logiczny podział komponentów. Powiązania między projektami są określane przez \textit{referencje}. Po określeniu które projekty są zależne od innych, kompilator potrafi automatycznie ustalić kolejność ich budowania.
 
-\noindent Solucja opisywanej aplikacji składa się z trzech projektów:
+Solucja opisywanej aplikacji składa się z trzech projektów:
 
-\medskip
-
-\noindent \textbf{TSP} 
+\subsection*{TSP} 
 
 \begin{figure}
 	\centering
@@ -19,7 +17,7 @@ Praca w Visual Studio polega na stworzeniu \textit{solucji}, czyli zbioru powią
 	\label{fig:rest_api}
 \end{figure}
 
-Przeglądarkowy interfejs użytkownika, napisany w AngularJS, który korzysta z API\footnote{Application Programming Interface} stworzonego w ASP.NET. API zostało zrealizowane jako \textit{webservice} w konwencji REST\footnote{Representional State Transfer}: udostępnia wszystkie funkcjonalności przy użyciu standardowych metod HTTP, co pozwala łatwo napisać alternatywny interfejs, na przykład w formie aplikacji mobilnej. Schemat komunikacji z API został przedstawiony na rysunku \ref{fig:rest_api}. Klient może pobrać listę punktów pośrednich na mapie, wysyłając żądanie typu \texttt{GET}, lub podając identyfikator punktu wybrać pojedynczy punkt. Zarówno odpowiedzi serwisu jak i~żądania klienta składają się z obiektów zserializowanych do tekstowego formatu JSON\footnote{JavaScript Object Notation}, który stanowi alternatywę dla XML. Pobierając wybrany punkt z serwisu, odpowiedź zostanie zwrócona w poniższym formacie:
+Przeglądarkowy interfejs użytkownika, napisany w AngularJS, który korzysta z API\footnote{Application Programming Interface} stworzonego w ASP.NET. API zostało zrealizowane jako \textit{webservice} w konwencji REST\footnote{Representional State Transfer}: udostępnia wszystkie funkcjonalności przy użyciu standardowych metod HTTP, co pozwala łatwo napisać alternatywny interfejs, na przykład w formie aplikacji mobilnej. Schemat komunikacji z API został przedstawiony na rysunku \ref{fig:rest_api}. Klient może pobrać listę punktów pośrednich na mapie, wysyłając żądanie typu \texttt{GET}, lub podając identyfikator punktu wybrać pojedynczy punkt. Zarówno odpowiedzi serwisu jak i~żądania klienta składają się z obiektów zserializowanych do tekstowego formatu JSON\footnote{JavaScript Object Notation}, który stanowi alternatywę dla XML o czytelniejszej składni. Pobierając wybrany punkt z serwisu, odpowiedź zostanie zwrócona w poniższym formacie:
 
 \begin{verbatim}
 {  
@@ -39,16 +37,12 @@ Aby umożliwić jednoznaczną identyfikację punktów, każdy punkt przy dodawan
 
 W zrealizowanej aplikacji z API serwisu korzysta strona napisana w HTML oraz JavaScript z biblioteką AngularJS. Dzięki skorzystaniu z możliwości JavaScript, strona nie musi być przeładowywana przy wykonywaniu żądania, przez co przypomina natywną aplikację okienkową pod względem wygody i~szybkości obsługi.
 
-\medskip
-
-\noindent \textbf{Solver}
+\subsection*{Solver}
 
 Silnik odnajdujący optymalne trasy na podstawie zbioru punktów. Utworzenie silnika w osobnym projekcie sprawia że jest kompilowany do osobnego pliku DLL. Jest on zupełnie niezależny od interfejsu użytkownika (nie posiada referencji do projektu TSP). Umożliwia to skorzystanie z jego możliwości w innych aplikacjach, oraz implementację alternatywnych interfejsów, np.~w~formie zwykłej aplikacji okienkowej na system Windows.
 
 Opis wykorzystanych algorytmów znajduje się w rozdziale \ref{ch:definicja_i_rozwiazanie}.
 
-\medskip
-
-\noindent \textbf{Solver.Tests}
+\subsection*{Solver.Tests}
 
 Testy jednostkowe, sprawdzające poprawność działania silnika. Zostały napisane z pomocą otwartoźródłowej biblioteki NUnit, umożliwiającej tworzenie testów jednostkowych w .NET Framework. Najważniejsze testy zostaną opisane w rozdziale \ref{sec:testy_jednostkowe}.

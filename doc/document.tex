@@ -30,9 +30,9 @@
 	\title{Aplikacja usprawniająca pracę kuriera -- problem komiwojażera w praktyce}
 	
 	\input{tytul.tex}
-	
+		
 	\tableofcontents
-	
+	\addtocontents{toc}{\protect\enlargethispage{3\baselineskip}}	
 	\chapter*{Wstęp}
 		\addcontentsline{toc}{chapter}{Wstęp}
 		\input{wprowadzenie.tex}
@@ -54,8 +54,9 @@
 			\input{mutacja.tex}
 	\chapter{Implementacja}
 		\section{Struktura projektu}
-			(Opis najważniejszych projektów i klas, architektura aplikacji, schematy. Wzorce projektowe w osobnym podrozdziale? MVVM, Factory, IoC, )
 			\input{struktura.tex}
+		\section{Wzorce projektowe}
+			\input{wzorce.tex}
 		\section{Integracja systemów zewnętrznych}
 			\input{zewnetrzne.tex}
 			\subsection{Google Maps}
@@ -64,15 +65,14 @@
 				\input{osrm.tex}
 	\chapter{Testowanie aplikacji}
 	\section{Testy manualne}
-	(Prezentacja działania aplikacji (screenshoty), uruchomienie dla dużej liczby punktów, przy różnej konfiguracji)
+		\input{manualne.tex}
 	\section{Testy jednostkowe}
 		\label{sec:testy_jednostkowe}
 		\input{jednostkowe.tex}
 	\section{Badanie wydajności}\label{sec:wydajnosc}
-	\input{wydajnosc.tex}
+%		\input{wydajnosc.tex}
 	\chapter*{Podsumowanie}
 		\addcontentsline{toc}{chapter}{Podsumowanie}
-		(Podsumowanie pracy, potencjalne możliwości rozwoju aplikacji.)
 		\input{podsumowanie.tex}
 	\bibliographystyle{plain}
 	\bibliography{bibliografia}

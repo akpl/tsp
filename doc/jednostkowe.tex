@@ -1,4 +1,4 @@
-Projekt zawiera kilka testów jednostkowych, które sprawdzają poprawność poszczególnych komponentów programu. Testy jednostkowe są wykonywane automatycznie, przez co po modyfikacji kodu programu można łatwo upewnić się, czy wprowadzone zmiany są zgodne z testami.
+Projekt zawiera kilka testów jednostkowych, które sprawdzają poprawność poszczególnych komponentów programu. Testy jednostkowe są wykonywane automatycznie, przez co po modyfikacji kodu programu można łatwo upewnić się, czy wprowadzone zmiany są zgodne z testami. Struktura projektu testowego wygląda następująco:
 
 \begin{center}
 \begin{forest}
@@ -42,7 +42,7 @@ Test \texttt{CrossoverDoesntCreateDuplicatesTest} gwarantuje że wynik krzyżowa
 
 \texttt{RouteDistanceTest} zapewnia poprawność obliczania całkowitej długości trasy.
 
-Testy zawarte w klasie \texttt{TargetTests} testują zamianę przykładowych współrzędnych geograficznych na tekst. Jest to istotne, ponieważ w aplikacji występują trzy sposoby zapisu współrzędnych. Ze względu na wykorzystanie dwóch systemów zewnętrznych wymagających różnych formatów, oraz wyświetlanie współrzędnych użytkownikowi, potrzebne są wszystkie trzy:
+Metody klasy \texttt{TargetTests} testują zamianę przykładowych współrzędnych geograficznych na tekst. Jest to istotne, ponieważ w aplikacji występują trzy sposoby zapisu współrzędnych. Ze względu na wykorzystanie dwóch systemów zewnętrznych wymagających różnych formatów, oraz wyświetlanie współrzędnych użytkownikowi, potrzebne są wszystkie trzy:
 
 \begin{itemize}
 	\item "$14.123^{\circ}$N $13.345^{\circ}$E" - format przeznaczony do wyświetlania,

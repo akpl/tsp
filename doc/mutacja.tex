@@ -1,4 +1,29 @@
+Mutacja to etap wprowadzania losowych zmian do chromosomu w celu zachowania różnorodności populacji. Pozwala zmniejszyć szanse wystąpienia sytuacji, w której krzyżowanie nadmiernie przystosowanych osobników nie poprawi wyniku w kolejnych pokoleniach.
 
-Podczas mutacji istnieje identyczny problem jak przy etapie krzyżowania -- jej wynikiem musi być poprawna trasa. 
+Podczas mutacji istnieje identyczny problem jak przy etapie krzyżowania -- jej wynikiem musi być poprawna trasa. Prostym sposobem jej przeprowadzenia jest losowanie dwóch punktów, a następnie zamiana ich kolejności. 
 
-Prostym sposobem jej przeprowadzenia jest losowanie dwóch punktów, a następnie zamiana ich kolejności. O ilości powyższych zamian decyduje współczynnik mutacji - konfigurowalny parametr, określający jak liczna część wszystkich punktów powinna zostać zamieniona.
+\noindent\textbf{Przykład:}
+Dla osobnika $O$ wybrano dwa losowe punkty: o indeksach 1 i 5 (licząc od zera). Elementy znajdujące się pod tymi indeksami zostały zamienione w osobniku $M$.
+
+\bigskip
+
+\begin{minipage}[t]{0.5\textwidth}
+	\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+		\hhline{~*{8}{-}}
+		$O$: & 1 & \cellcolor{blue!25}2 & 3 & 4 & 5 & \cellcolor{blue!25}6 & 7 & 8 \\
+		\hhline{~*{8}{-}}
+	\end{tabular} 
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+	\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+		\hhline{~*{8}{-}}
+		$M$: & 1 & 6 & 3 & 4 & 5 & 2 & 7 & 8 \\
+		\hhline{~*{8}{-}}
+	\end{tabular} 
+\end{minipage}
+
+\begin{center}
+	\textbf{Źródło:} Opracowanie własne 
+\end{center}
+
+O ilości powyższych zamian decyduje współczynnik mutacji - konfigurowalny parametr, określający jak liczna część wszystkich punktów powinna zostać zamieniona. Współczynnik ten nie powinien być zbyt wysoki, gdyż za duża liczba losowych modyfikacji może uszkodzić najlepsze osobniki. Domyślna wartość tego parametru w aplikacji to 0,1.
