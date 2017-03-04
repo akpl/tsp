@@ -56,9 +56,12 @@
         </div>
         <div class="col-md-8 fill">
             <ng-map center="[50.061820, 19.936709]" class="fill" on-click="addTargetOnMap()">
-                <marker position="@ViewBag.StartingPoint.Location.ToDecimalDegreesString()"
-                        title="@ViewBag.StartingPoint.Name" icon="~/Content/start.png">
-                </marker>
+                @if (ViewBag.IsStartingPointVisible)
+                {
+                    <marker position="@ViewBag.StartingPoint.Location.ToDecimalDegreesString()"
+                            title="@ViewBag.StartingPoint.Name" icon="~/Content/start.png">
+                    </marker>
+                }
                 <marker ng-repeat="target in targets"
                         position="{{target.location.latitude}},{{target.location.longitude}}"
                         title="{{target.name}}">

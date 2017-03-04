@@ -1,6 +1,6 @@
 Ocena rozwiązania polega na przypisaniu wartości liczbowej danemu rozwiązaniu, tak aby dało się wybrać bardziej optymalne przy porównywaniu. Dla trasy jest to jej całkowita długość, czyli suma długości odcinków od wybranego punktu, między wszystkimi punktami pośrednimi i od ostatniego punktu pośredniego do punktu początkowego.
 
-Punkty są przechowywane w aplikacji w postaci grafowej, więc odnalezienie długości trasy jest proste. Wszystkie punkty zawiera zbiór odległości do każdego innego punktu. Odległości są przechowywane we standardowej kolekcji \texttt{Dictionary<T>}, która jest zaimplementowana w postaci tablicy z~haszowaniem, umożliwiającej odnalezienie elementu w średnim czasie $O(1)$. Dlatego obliczanie całkowitej odległości ma złożoność bliską liniowej.
+Punkty są przechowywane w aplikacji w postaci grafowej, więc odnalezienie długości trasy jest proste. Wszystkie punkty zawierają zbiór odległości do każdego innego punktu. Odległości są przechowywane w standardowej kolekcji \texttt{Dictionary<T>}, która jest zaimplementowana w postaci tablicy z~haszowaniem, umożliwiającej odnalezienie elementu w średnim czasie $O(1)$. Dlatego obliczanie całkowitej odległości ma złożoność bliską liniowej.
 
 Aplikacja umożliwia także wyszukiwanie tras bez określonego punktu początkowego. Przy tej samej liczbie wszystkich punktów skorzystanie z tej opcji zwiększa liczbę możliwych tras, co utrudnia odnalezienie tej najkrótszej. 
 

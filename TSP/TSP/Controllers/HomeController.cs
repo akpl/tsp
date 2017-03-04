@@ -14,7 +14,11 @@ namespace TSP.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.StartingPoint = _config.StartingPoint;
+            ViewBag.IsStartingPointVisible = _config.StartingPoint != null;
+            if (ViewBag.IsStartingPointVisible)
+            {
+                ViewBag.StartingPoint = _config.StartingPoint;
+            }
             return View();
         }
 

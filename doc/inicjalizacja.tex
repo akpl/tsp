@@ -1,4 +1,4 @@
-Inicjalizacja polega na wygenerowaniu populacji złożonej z losowych osobników. W przypadku problemu komiwojażera populację stanowi zbiór tras, składających się z~punktów pośrednich, dlatego należy spełnić warunek, że każdy element musi wystąpić dokładnie raz w wylosowanej trasie.
+Inicjalizacja polega na wygenerowaniu populacji złożonej z losowych osobników. W~przypadku problemu komiwojażera populację stanowi zbiór tras, składających się z~punktów pośrednich, dlatego należy spełnić warunek, że każdy element musi wystąpić dokładnie raz w wylosowanej trasie.
 
 Najprostszym sposobem na spełnienie powyższego warunku jest przetasowanie zbioru wszystkich punktów. Opracowany program korzysta ze współczesnej wersji algorytmu Fishera-Yatesa\cite{shuffle}. Ma on złożoność $O(n)$ względem oryginalnego algorytmu o złożoności $O(n^{2})$. Algorytm polega na wykonaniu $n$~zamian między $n$-tym elementem zbioru, a losowym elementem, gdzie $n$~jest równe liczbie elementów zbioru.
 

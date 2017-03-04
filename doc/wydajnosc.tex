@@ -1,3 +1,5 @@
+\subsection*{Wydajność pobierania danych geograficznych}
+
 Pierwszym etapem poszukiwania rozwiązania jest pobranie danych z serwisu. Aplikacja obsługuje trzy źródła: 
 \begin{itemize}
 	\item odległości z Google Maps (serwis internetowy, pojedyncze zapytanie),
@@ -7,7 +9,7 @@ Pierwszym etapem poszukiwania rozwiązania jest pobranie danych z serwisu. Aplik
 
 Wyniki pomiarów wydajności dla 10 punktów zostały przedstawione w tabeli \ref{tab:pobieranie} oraz na wykresie \ref{chart:pobieranie}.
 
-\begin{table}[t!]
+\begin{table}[H]
 	\centering
 	\caption{Czas pobierania danych dla różnych metod [ms]}
 	\label{tab:pobieranie}
@@ -30,18 +32,135 @@ Minimum          & 415                  & 960                                   
 	\end{tabular}
 	\source{Opracowanie własne}
 \end{table}
-\begin{figure}[b!]
+\begin{figure}[H]
 	\caption{Czas pobierania danych dla różnych metod: wykres}
 	\begin{bchart}[max=5000, step=1000, unit=ms]
 		\label{chart:pobieranie}
-		\bcbar[label=Google Maps]{513.5}
+		\bcbar[label=Google Maps,color=gray!20]{513.5}
 		\smallskip
-		\bcbar[label=OSRM (dystans)]{4133.9}
+		\bcbar[label=OSRM (dystans),color=gray!20]{4133.9}
 		\smallskip
-		\bcbar[label=OSRM (czas)]{33.7}
+		\bcbar[label=OSRM (czas),color=gray!20]{33.7}
 	\end{bchart}
 	\source{Opracowanie własne}
 \end{figure}
 
-\clearpage
 Po wykonaniu powyższych pomiarów okazało się że najszybszą metodą jest pobieranie macierzy czasów przejazdów z lokalnego serwisu OSRM. Jest to zgodne z przewidywaniami, gdyż cała macierz jest pobierana w jednym zapytaniu HTTP oraz nie występują opóźnienia spowodowane transmisją sieciową.
+
+\clearpage
+
+\subsection*{Wydajność algorytmu genetycznego}
+Ze względu na dużą ilość danych do zebrania, pomiary wykonano przy pomocy testów automatycznych. Każdy test polega na ustawieniu odpowiednich parametrów, stworzenia obiektu \texttt{System.Diagnostics.Stopwatch} (klasa w~.NET Framework pozwalająca dokładnie mierzyć czas) i uruchomieniu algorytmu genetycznego. Zwrócone wyniki (najkrótsze trasy) oraz czas jego pracy są wypisywane w konsoli.
+
+Testy wydajnościowe znajdują się w klasie \texttt{PerformanceTests} należącej do projektu \texttt{Solver.Tests}.
+
+Ponieważ algorytm korzysta z generatora liczb pseudolosowych, wyniki są różne przy każdym uruchomieniu. Ponadto czas działania jest dodatkowo zależny od szybkości komputera na którym działa program. Aby uzyskać dokładniejsze wyniki, dla każdej konfiguracji powtórzono test 10 razy. 
+
+Sprawdzono trzy parametry, mające największy wpływ na optymalizację i czas działania, tj. liczbę pokoleń, elitaryzm oraz rozmiar populacji.
+
+Dane o czasach przejazdów między punktami zostały uprzednio pobrane z OSRM i zapisane do pliku.
+
+\begin{table}[bh]
+	\centering
+	\caption{Czas działania algorytmu genetycznego [ms]}
+	\resizebox{\textwidth}{!}{
+	{\small
+	\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+		\hline
+		Pokolenia                                                     & \multicolumn{6}{c|}{\textbf{100}}                                                                                                                                                                                     & \multicolumn{6}{c|}{\textbf{1000}}                                                                                                                                                                                    \\ \hline
+		Elitaryzm                                                     & \multicolumn{3}{c|}{\textbf{NIE}}                                                                         & \multicolumn{3}{c|}{\textbf{TAK}}                                                                         & \multicolumn{3}{c|}{\textbf{NIE}}                                                                         & \multicolumn{3}{c|}{\textbf{TAK}}                                                                         \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Rozmiar\\   populacji\end{tabular} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} \\ \hline
+		1                                                             & 156                              & 325                               & 3436                               & 176                              & 328                               & 3478                               & 1681                             & 3157                              & 34421                              & 1672                             & 3330                              & 34770                              \\ \hline
+		2                                                             & 155                              & 319                               & 3483                               & 238                              & 331                               & 3429                               & 1544                             & 3109                              & 33009                              & 1616                             & 3283                              & 34325                              \\ \hline
+		3                                                             & 152                              & 359                               & 3415                               & 208                              & 337                               & 3478                               & 1542                             & 3135                              & 32183                              & 1629                             & 3344                              & 34546                              \\ \hline
+		4                                                             & 152                              & 320                               & 3445                               & 165                              & 325                               & 3482                               & 1569                             & 3090                              & 32067                              & 1637                             & 3426                              & 34595                              \\ \hline
+		5                                                             & 155                              & 318                               & 3524                               & 161                              & 332                               & 3462                               & 1571                             & 3155                              & 32037                              & 1607                             & 3280                              & 34564                              \\ \hline
+		6                                                             & 152                              & 317                               & 3340                               & 166                              & 332                               & 3429                               & 1528                             & 3163                              & 32028                              & 1619                             & 3322                              & 34643                              \\ \hline
+		7                                                             & 153                              & 313                               & 3299                               & 163                              & 328                               & 3459                               & 1549                             & 3106                              & 32397                              & 1665                             & 3326                              & 34462                              \\ \hline
+		8                                                             & 151                              & 309                               & 3338                               & 164                              & 335                               & 3602                               & 1571                             & 3141                              & 32401                              & 1619                             & 3266                              & 34469                              \\ \hline
+		9                                                             & 151                              & 316                               & 3344                               & 180                              & 331                               & 3445                               & 1541                             & 3177                              & 33075                              & 1617                             & 3308                              & 34532                              \\ \hline
+		10                                                            & 151                              & 309                               & 3288                               & 173                              & 326                               & 3470                               & 1533                             & 3341                              & 32679                              & 1672                             & 3318                              & 34433                              \\ \hline\hline
+		\textbf{Suma}                                                 & 1528                          & 3205                           & 33912                           & 1794                          & 3305                           & 34734                           & 15629                         & 31574                          & 326297                          & 16353                         & 33203                          & 345339                          \\ \hline
+		\textbf{Średnia}                                              & \textbf{152.80}                  & \textbf{320.50}                   & \textbf{3391.20}                   & \textbf{179.40}                  & \textbf{330.50}                   & \textbf{3473.40}                   & \textbf{1562.90}                 & \textbf{3157.40}                  & \textbf{32629.70}                  & \textbf{1635.30}                 & \textbf{3320.30}                  & \textbf{34533.90}                  \\ \hline
+		\textbf{Max}                                           & 156                           & 359                            & 3524                            & 238                           & 337                            & 3602                            & 1681                          & 3341                           & 34421                           & 1672                          & 3426                           & 34770                           \\ \hline
+		\textbf{Min}                                              & 151                           & 309                            & 3288                            & 161                           & 325                            & 3429                            & 1528                          & 3090                           & 32028                           & 1607                          & 3266                           & 34325                           \\ \hline
+	\end{tabular}
+}}
+\source{Opracowanie własne}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\caption{Wyniki optymalizacji czasu przejazdu trasy [h]}
+	\resizebox{\textwidth}{!}{
+	{\small
+	\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+\hline
+Pokolenia                                                     & \multicolumn{6}{c|}{\textbf{100}}                                                                                                                                                                                     & \multicolumn{6}{c|}{\textbf{1000}}                                                                                                                                                                                    \\ \hline
+Elitaryzm                                                     & \multicolumn{3}{c|}{\textbf{NIE}}                                                                         & \multicolumn{3}{c|}{\textbf{TAK}}                                                                         & \multicolumn{3}{c|}{\textbf{NIE}}                                                                         & \multicolumn{3}{c|}{\textbf{TAK}}                                                                         \\ \hline
+\begin{tabular}[c]{@{}l@{}}Rozmiar\\   populacji\end{tabular} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} & \multicolumn{1}{c|}{\textbf{50}} & \multicolumn{1}{c|}{\textbf{100}} & \multicolumn{1}{c|}{\textbf{1000}} \\ \hline
+1                                                             & 5.62                             & 5.34                              & 5.28                               & 4.89                             & 4.98                              & 4.62                               & 5.85                             & 5.50                              & 5.51                               & 4.25                             & 4.47                              & 4.14                               \\ \hline
+2                                                             & 5.98                             & 5.71                              & 5.44                               & 4.91                             & 5.13                              & 4.90                               & 6.01                             & 5.69                              & 5.40                               & 4.43                             & 4.45                              & 4.47                               \\ \hline
+3                                                             & 5.91                             & 5.55                              & 5.53                               & 4.78                             & 4.80                              & 4.97                               & 5.96                             & 5.83                              & 5.31                               & 4.59                             & 4.21                              & 4.02                               \\ \hline
+4                                                             & 5.62                             & 5.27                              & 5.20                               & 5.02                             & 4.93                              & 4.78                               & 5.58                             & 5.72                              & 5.23                               & 4.19                             & 4.13                              & 4.39                               \\ \hline
+5                                                             & 5.69                             & 5.73                              & 5.13                               & 5.27                             & 4.75                              & 4.88                               & 5.96                             & 5.49                              & 5.39                               & 4.09                             & 4.04                              & 4.55                               \\ \hline
+6                                                             & 5.86                             & 5.53                              & 5.28                               & 5.05                             & 4.73                              & 4.48                               & 5.75                             & 5.43                              & 5.26                               & 3.96                             & 4.42                              & 4.19                               \\ \hline
+7                                                             & 5.89                             & 5.80                              & 5.32                               & 4.80                             & 4.82                              & 4.87                               & 5.66                             & 5.82                              & 5.51                               & 4.17                             & 4.22                              & 4.73                               \\ \hline
+8                                                             & 5.62                             & 5.31                              & 5.14                               & 4.98                             & 5.09                              & 4.67                               & 5.70                             & 5.63                              & 5.44                               & 4.60                             & 4.56                              & 4.60                               \\ \hline
+9                                                             & 6.04                             & 5.28                              & 5.32                               & 4.75                             & 4.81                              & 4.96                               & 5.70                             & 5.81                              & 5.32                               & 4.07                             & 4.18                              & 4.30                               \\ \hline
+10                                                            & 5.89                             & 5.94                              & 5.56                               & 4.66                             & 4.62                              & 4.88                               & 5.82                             & 5.77                              & 5.42                               & 3.96                             & 4.46                              & 4.35                               \\ \hline\hline
+\textbf{Suma}                                                 & 58.12                            & 55.47                             & 53.20                              & 49.12                            & 48.68                             & 48.00                              & 57.99                            & 56.71                             & 53.80                              & 42.30                            & 43.13                             & 43.74                              \\ \hline
+\textbf{Średnia}                                              & \textbf{5.81}                    & \textbf{5.55}                     & \textbf{5.32}                      & \textbf{4.91}                    & \textbf{4.87}                     & \textbf{4.80}                      & \textbf{5.80}                    & \textbf{5.67}                     & \textbf{5.38}                      & \textbf{4.23}                    & \textbf{4.31}                     & \textbf{4.37}                      \\ \hline
+\textbf{Maksimimum}                                           & 6.04                             & 5.94                              & 5.56                               & 5.27                             & 5.13                              & 4.97                               & 6.01                             & 5.83                              & 5.51                               & 4.60                             & 4.56                              & 4.73                               \\ \hline
+\textbf{Minimum}                                              & 5.62                             & 5.27                              & 5.13                               & 4.66                             & 4.62                              & 4.48                               & 5.58                             & 5.43                              & 5.23                               & 3.96                             & 4.04                              & 4.02                               \\ \hline
+
+	\end{tabular}
+}}
+\source{Opracowanie własne}
+\end{table}
+
+
+
+\begin{figure}[b!]
+	\caption{Średnie wyniki optymalizacji czasu przejazdu trasy: wykres}
+	\begin{bchart}[max=6, step=1, unit=h]
+		\bclabel{\parbox{2cm}{\footnotesize\raggedleft{Rozmiar \\populacji}}}
+		\bigskip
+		\bcbar[color=gray!20]{4.91}
+		\bclabel{50}
+		\bcbar[color=gray!80]{5.81}
+		\smallskip
+		\bcbar[color=gray!20]{4.87}
+		\bclabel{100}
+		\bclabel{\rotatebox{90}{\parbox{2cm}{\centering{100\\pokoleń}}}\qquad\qquad\qquad}
+		\bcbar[color=gray!80]{5.55}
+		\smallskip
+		\bcbar[color=gray!20]{4.80}
+		\bclabel{1000}
+		\bcbar[color=gray!80]{5.32}
+		
+		\bigskip
+		
+		\bcbar[color=gray!20]{4.23}
+		\bclabel{50}
+		\bcbar[color=gray!80]{5.80}
+		\smallskip
+		\bcbar[color=gray!20]{4.31}
+		\bclabel{100}
+		\bclabel{\rotatebox{90}{\parbox{2cm}{\centering{1000\\pokoleń}}}\qquad\qquad\qquad}
+		\bcbar[color=gray!80]{5.67}
+		\smallskip
+		\bcbar[color=gray!20]{4.37}
+		\bclabel{1000}
+		\bcbar[color=gray!80]{5.38}
+		\smallskip
+
+	\end{bchart}
+	\source{Opracowanie własne}
+\end{figure}
+
+Najlepszy znaleziony czas przejazdu to 3,96 h. Został on wyszukany przy następujących opcjach: rozmiar populacji 50, 1000 pokoleń, elitaryzm włączony. Także dla tej konfiguracji uzyskano najlepsze średnie wyniki. Można więc zauważyć że zwiększanie rozmiaru populacji nie zawsze poprawia optymalizację, za to znacząco zwiększa czas działania.
+
+Włączenie elitaryzmu znacznie poprawiło wynik dla każdego przypadku, a~w~dodatku ma minimalny wpływ na czas obliczeń.
+
+Przez zasadę działania algorytmu genetycznego, przy zbyt niskim rozmiarze populacji lub liczby pokoleń wyniki są losowe. Nawet drobne zwiększenie tych parametrów poprawi optymalizację, a czas oczekiwania na wyniki wciąż będzie niezauważalny dla użytkownika (do paru sekund).
